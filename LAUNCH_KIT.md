@@ -26,8 +26,8 @@ Specifically, AI models consistently:
 To solve this, we built `secure-code`: an open-source, universal engineering doctrine, AI rule system, and 1-click injection engine spanning 10 programming languages (TypeScript, Python, Go, Rust, C#, Java, PHP, Ruby, C++, Mobile).
 
 Key features:
-- Zero-Install CLI: Run `npx secure-code inject` in any repo. It auto-detects your stack and AI tool (Cursor, Claude Code, Antigravity, Copilot) and non-destructively merges hardened invariants into `.cursorrules`, `CLAUDE.md`, or `AGENTS.md`.
-- Codebase Scanner: `npx secure-code audit` scans existing code for hardcoded secrets, SQL string interpolations, timing attacks, float money, and eval executions.
+- Zero-Install CLI: Run `npx github:carbonthecoder/secure-code inject` in any repo. It auto-detects your stack and AI tool (Cursor, Claude Code, Antigravity, Copilot) and non-destructively merges hardened invariants into `.cursorrules`, `CLAUDE.md`, or `AGENTS.md`.
+- Codebase Scanner: `npx github:carbonthecoder/secure-code audit` scans existing code for hardcoded secrets, SQL string interpolations, timing attacks, float money, and eval executions.
 - Zero-Dependency Interactive Playground: An offline HTML dashboard (`playground/index.html`) to test snippets and auto-harden code in real time.
 - Drop-in Templates: Zero-SSRF HTTP fetcher and fail-fast environment validators.
 
@@ -58,8 +58,8 @@ When asked to generate a file download endpoint, fetch a user profile, or verify
 
 We got tired of fixing these same AI hallucinations on PR reviews, so we built **`secure-code`**:
 
-- **How it works**: You run `npx secure-code inject` in your project. It inspects your tech stack (Node, Python, Go, Rust, etc.) and AI configuration (.cursorrules, CLAUDE.md, GEMINI.md, AGENTS.md), and injects mathematical invariants that force the AI to write hardened code.
-- **Includes an instant scanner**: Run `npx secure-code audit` to scan existing code for secrets, raw SQL queries, float money, and unsafe deserialization.
+- **How it works**: You run `npx github:carbonthecoder/secure-code inject` in your project. It inspects your tech stack (Node, Python, Go, Rust, etc.) and AI configuration (.cursorrules, CLAUDE.md, GEMINI.md, AGENTS.md), and injects mathematical invariants that force the AI to write hardened code.
+- **Includes an instant scanner**: Run `npx github:carbonthecoder/secure-code audit` to scan existing code for secrets, raw SQL queries, float money, and unsafe deserialization.
 - **Includes drop-in templates**: Safe-fetch utility (blocks private CIDRs, DNS rebinding, and AWS metadata) + fail-fast environment variable validators.
 
 It's 100% MIT open-source: https://github.com/carbonthecoder/secure-code
@@ -79,7 +79,7 @@ If you use Cursor (`.cursorrules`) or Claude Code (`CLAUDE.md`), you know the AI
 We built an open-source tool called **`secure-code`** that automatically injects military-grade security and performance guardrails into your existing `.cursorrules` and `CLAUDE.md` without overwriting your custom rules.
 
 Just run:
-`npx secure-code inject`
+`npx github:carbonthecoder/secure-code inject`
 
 What it enforces on Cursor/Claude:
 - Zero IDOR (Mandatory session tenant/user check on every DB query)
@@ -169,7 +169,7 @@ Language-specific rules auto-inject based on your project!
 
 You don't need to install packages or clone repos. Just run:
 
-npx secure-code inject
+npx github:carbonthecoder/secure-code inject
 
 It auto-detects your stack and AI assistants (.cursorrules, CLAUDE.md, GEMINI.md), merging invariants non-destructively in 1 second.
 ```
@@ -187,8 +187,8 @@ Paste code -> Run audit -> Click "Auto-Harden".
 ```text
 8/ Automated CI/CD & Git Hooks.
 
-• Run `npx secure-code audit` to scan existing codebases.
-• Run `npx secure-code install-hook` to block accidental API key commits.
+• Run `npx github:carbonthecoder/secure-code audit` to scan existing codebases.
+• Run `npx github:carbonthecoder/secure-code install-hook` to block accidental API key commits.
 • Drop our GitHub Action into .github/workflows/ to gate every PR automatically.
 ```
 

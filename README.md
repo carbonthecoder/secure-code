@@ -92,13 +92,13 @@ Standard AI assistants optimize for *making code work right now*. They lack prod
 ### Zero-Install (NPX)
 ```bash
 # Inject AI rules into active repo:
-npx secure-code inject
+npx github:carbonthecoder/secure-code inject
 
 # Run security & performance audit:
-npx secure-code audit
+npx github:carbonthecoder/secure-code audit
 
 # Install Git pre-commit hook:
-npx secure-code install-hook
+npx github:carbonthecoder/secure-code install-hook
 ```
 
 ### Windows (PowerShell)
