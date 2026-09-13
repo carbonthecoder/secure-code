@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# 🛡️ secure-code Git Pre-Commit Hook
+
+echo "🛡️ Running secure-code pre-commit verification..."
+
+# 1. Block staged .env files
+STAGED_ENV=$(git diff --cached --name-only | grep -E '^(\.env|\.env\.local|\.env\.production)$')
+if [ -n "$STAGED_ENV" ]; then
+  echo "❌ ERROR: Attempting to commit environment secret file: $STAGED_ENV"
+  echo "Please unstage with: git reset HEAD $STAGED_ENV"
+  exit 1
+fi
+
+# 2. Check for hardcoded AWS keys or private tokens
+SECRET_PATTERN='(AKIA[0-9A-Z]{16}|ghp_[0-9a-zA-Z]{36}|sk_live_[0-9a-zA-Z]{24})'
+if git diff --cached | grep -E "$SECRET_PATTERN" > /dev/null; then
+  echo "❌ ERROR: Hardcoded API secret detected in staged changes!"
+  exit 1
+fi
+
+echo "✅ secure-code pre-commit check passed."
+exit 0

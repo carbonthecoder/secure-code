@@ -1,0 +1,31 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node / Dependencies
+node_modules/
+dist/
+build/
+.next/
+out/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.pytest_cache/
+
+# Rust / Go
+target/
+bin/*.exe
+bin/*.dll
+
+# Logs & Environment
+*.log
+.env
+.env.local
+.env.*.local
+!.env.example

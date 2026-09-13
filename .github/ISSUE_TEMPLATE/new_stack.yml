@@ -1,0 +1,38 @@
+name: 📦 Propose a New Language / Framework Stack
+description: Suggest adding security and performance rules for an ecosystem not yet covered.
+title: "[Stack]: Add support for <Language / Framework>"
+labels: ["enhancement", "new-stack"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for proposing a new language or framework stack for `secure-code`!
+  - type: input
+    id: stack_name
+    attributes:
+      label: Language / Runtime Name
+      placeholder: "e.g. Zig, Elixir, Haskell, Scala, Swift Server"
+    validations:
+      required: true
+  - type: textarea
+    id: common_traps
+    attributes:
+      label: Common AI Security Flaws in this Stack
+      description: What security vulnerabilities or anti-patterns do AI models routinely introduce in this language?
+      placeholder: "e.g. In Elixir, atoms created dynamically from user inputs can exhaust the VM atom table..."
+    validations:
+      required: true
+  - type: textarea
+    id: perf_traps
+    attributes:
+      label: Common Performance Bottlenecks
+      description: What concurrency or memory pitfalls does this stack suffer from?
+      placeholder: "e.g. Unbounded process mailboxes under load spike..."
+    validations:
+      required: true
+  - type: checkboxes
+    id: contribution_intent
+    attributes:
+      label: Can you submit a PR for this?
+      options:
+        - label: "Yes, I am willing to draft `security-rules.md` and `performance-rules.md` for this stack."

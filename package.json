@@ -1,0 +1,38 @@
+{
+  "name": "secure-code",
+  "version": "1.0.0",
+  "description": "The Universal Production Security & High-Performance Standard for AI Agents & Modern Web",
+  "bin": {
+    "secure-code": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "node ./tests/test_audit.js",
+    "audit": "node ./bin/cli.js audit",
+    "inject": "node ./bin/cli.js inject",
+    "install-hook": "node ./bin/cli.js install-hook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carbonthecoder/secure-code.git"
+  },
+  "keywords": [
+    "security",
+    "ai-security",
+    "cursorrules",
+    "agents",
+    "claude-code",
+    "antigravity",
+    "copilot",
+    "owasp",
+    "devsecops",
+    "performance",
+    "sub-millisecond",
+    "core-web-vitals"
+  ],
+  "author": "secure-code Contributors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/carbonthecoder/secure-code/issues"
+  },
+  "homepage": "https://github.com/carbonthecoder/secure-code#readme"
+}
