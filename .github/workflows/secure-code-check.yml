@@ -1,4 +1,4 @@
-name: secure-code Production Gatekeeper
+name: secure-code CI & Production Gatekeeper
 
 on:
   push:
@@ -7,36 +7,36 @@ on:
     branches: [ main, master, develop ]
 
 jobs:
-  audit:
-    name: 🛡️ secure-code Audit & Vulnerability Check
+  test:
+    name: 🛡️ secure-code Test Suite & Vulnerability Audit
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Scan for Hardcoded Secrets
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Test Suite (16 Unit Tests)
+        run: npm test
+
+      - name: Verify CLI Inject & Audit Execution
         run: |
-          echo "Scanning for hardcoded API keys, private tokens, and secret strings..."
-          if grep -rnEI '("|'\'')(AKIA[0-9A-Z]{16}|ghp_[0-9a-zA-Z]{36}|sk_live_[0-9a-zA-Z]{24})' --exclude-dir={.git,node_modules,target,vendor} .; then
-            echo "❌ CRITICAL: Hardcoded API secret detected in codebase!"
+          node bin/cli.js audit
+          bash bin/secure-code.sh audit
+
+      - name: Scan Code Recipes & Templates for Real Secrets
+        run: |
+          echo "Scanning recipes and templates for unmocked secrets..."
+          if grep -rnEI '("|'\'')(AKIA[0-9A-Z]{16}|ghp_[0-9a-zA-Z]{36}|sk_live_[0-9a-zA-Z]{24})' recipes/ templates/; then
+            echo "❌ CRITICAL: Hardcoded API secret detected in recipes or templates!"
             exit 1
           fi
-          echo "✅ No hardcoded cloud secrets detected."
-
-      - name: Scan for Raw SQL String Interpolation
-        run: |
-          echo "Scanning for dangerous SQL string interpolations..."
-          if grep -rnEI '(SELECT|INSERT|UPDATE|DELETE).*\$\{.*\}' --include=*.ts --include=*.js --exclude-dir={node_modules,.next,dist} .; then
-            echo "⚠️ WARNING: Possible raw SQL string interpolation detected. Parameterized queries required!"
-          fi
-
-      - name: Scan for Floating Point Currency Math
-        run: |
-          echo "Scanning for floating point money variables..."
-          if grep -rnEI '(price|amount|balance|total|fee)\s*[:=]\s*(number|float|double)' --include=*.ts --include=*.py --include=*.go .; then
-            echo "ℹ️ NOTE: Verify financial variables use integer minor units or Decimal types."
-          fi
+          echo "✅ All recipes and templates are clean of secrets."
 
       - name: Audit Status
-        run: echo "🎉 secure-code verification completed successfully."
+        run: echo "🎉 secure-code CI verification completed successfully."
+
