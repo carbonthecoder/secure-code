@@ -1,5 +1,5 @@
 {
-  "name": "secure-code",
+  "name": "@carbonthecoder/secure-code",
   "version": "1.0.0",
   "description": "The Universal Production Security & High-Performance Standard for AI Agents & Modern Web",
   "bin": {
