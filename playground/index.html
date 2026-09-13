@@ -3,32 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>secure-code | Universal Production Security & Performance Standard for AI Agents</title>
+  <title>secure-code | The Simple Safety Seatbelt for AI Coding Assistants</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Geist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #000000;
       --surface: #0a0a0a;
       --surface-elevated: #111111;
-      --surface-hover: #161616;
+      --surface-hover: #171717;
       --border: rgba(255, 255, 255, 0.08);
       --border-hover: rgba(255, 255, 255, 0.2);
-      --border-active: rgba(255, 255, 255, 0.35);
       --fg: #ededed;
       --fg-muted: #888888;
       --fg-subtle: #555555;
       --emerald: #00dc82;
-      --emerald-subtle: rgba(0, 220, 130, 0.1);
+      --emerald-subtle: rgba(0, 220, 130, 0.08);
       --emerald-border: rgba(0, 220, 130, 0.25);
       --danger: #ff453a;
-      --danger-subtle: rgba(255, 69, 58, 0.1);
+      --danger-subtle: rgba(255, 69, 58, 0.08);
       --danger-border: rgba(255, 69, 58, 0.25);
       --warning: #f5a623;
-      --warning-subtle: rgba(245, 166, 35, 0.1);
+      --warning-subtle: rgba(245, 166, 35, 0.08);
       --warning-border: rgba(245, 166, 35, 0.25);
-      --blue: #0070f3;
       --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
@@ -41,12 +39,11 @@
       font-family: var(--font-sans);
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* Ambient Vercel Spotlight */
+    /* Ambient Subtle Lighting */
     body::before {
       content: "";
       position: fixed;
@@ -54,27 +51,27 @@
       left: 50%;
       transform: translateX(-50%);
       width: 1000px;
-      height: 480px;
-      background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.09) 0%, rgba(0, 0, 0, 0) 70%);
+      height: 400px;
+      background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
 
-    /* Top Navigation */
+    /* Navigation */
     nav {
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.8);
       border-bottom: 1px solid var(--border);
     }
 
     .nav-inner {
       max-width: 1200px;
       margin: 0 auto;
-      height: 64px;
+      height: 60px;
       padding: 0 24px;
       display: flex;
       align-items: center;
@@ -84,22 +81,22 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       text-decoration: none;
       color: #fff;
     }
 
     .brand-logo {
-      width: 28px;
-      height: 28px;
-      background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
-      border-radius: 6px;
+      width: 24px;
+      height: 24px;
+      background: #ffffff;
+      border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #000;
       font-weight: 800;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .brand-name {
@@ -114,7 +111,7 @@
       color: var(--fg-muted);
       background: var(--surface-elevated);
       border: 1px solid var(--border);
-      padding: 2px 6px;
+      padding: 1px 6px;
       border-radius: 4px;
     }
 
@@ -131,9 +128,7 @@
       transition: color 0.15s ease;
     }
 
-    .nav-link:hover {
-      color: var(--fg);
-    }
+    .nav-link:hover { color: var(--fg); }
 
     .btn-github {
       display: flex;
@@ -146,21 +141,20 @@
       font-size: 13px;
       font-weight: 600;
       text-decoration: none;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
     }
 
     .btn-github:hover {
       background: #ffffff;
-      box-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
-      transform: translateY(-1px);
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.2);
     }
 
-    /* Hero Section */
+    /* Hero */
     .hero {
       position: relative;
       z-index: 1;
-      max-width: 900px;
-      margin: 64px auto 48px auto;
+      max-width: 820px;
+      margin: 64px auto 44px auto;
       text-align: center;
       padding: 0 24px;
     }
@@ -171,68 +165,53 @@
       gap: 8px;
       background: var(--surface);
       border: 1px solid var(--border);
-      padding: 6px 14px;
+      padding: 5px 14px;
       border-radius: 9999px;
       font-size: 12px;
       font-weight: 500;
       color: var(--fg-muted);
-      margin-bottom: 24px;
-      letter-spacing: 0.02em;
-      transition: border-color 0.2s ease;
+      margin-bottom: 20px;
+      letter-spacing: 0.01em;
     }
 
-    .hero-pill:hover {
-      border-color: var(--border-hover);
-    }
-
-    .pulse-dot {
+    .pill-indicator {
       width: 6px;
       height: 6px;
       background: var(--emerald);
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--emerald);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
     }
 
     h1.hero-title {
-      font-size: clamp(34px, 5vw, 56px);
+      font-size: clamp(32px, 4.8vw, 54px);
       font-weight: 800;
       letter-spacing: -0.035em;
-      line-height: 1.1;
+      line-height: 1.15;
       color: #ffffff;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     p.hero-subtitle {
-      font-size: clamp(16px, 2vw, 19px);
+      font-size: clamp(15px, 1.8vw, 18px);
       color: var(--fg-muted);
       line-height: 1.6;
-      max-width: 680px;
-      margin: 0 auto 32px auto;
+      max-width: 660px;
+      margin: 0 auto 28px auto;
       font-weight: 400;
     }
 
-    /* Terminal Quickstart Bar */
+    /* 1-Click Terminal Quickstart */
     .cli-bar {
       display: inline-flex;
       align-items: center;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 6px 6px 6px 16px;
+      border-radius: 8px;
+      padding: 6px 6px 6px 14px;
       gap: 12px;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+      transition: border-color 0.15s ease;
     }
 
-    .cli-bar:hover {
-      border-color: var(--border-hover);
-    }
+    .cli-bar:hover { border-color: var(--border-hover); }
 
     .cli-text {
       font-family: var(--font-mono);
@@ -242,8 +221,8 @@
 
     .cli-prompt {
       color: var(--fg-subtle);
-      user-select: none;
       margin-right: 4px;
+      user-select: none;
     }
 
     .btn-copy {
@@ -266,11 +245,11 @@
       border-color: var(--border-hover);
     }
 
-    /* Main Workspace Container */
+    /* Workspace */
     .main-wrapper {
       position: relative;
       z-index: 1;
-      max-width: 1240px;
+      max-width: 1200px;
       margin: 0 auto 80px auto;
       padding: 0 24px;
     }
@@ -280,7 +259,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 8px;
       margin-bottom: 24px;
       flex-wrap: wrap;
     }
@@ -289,7 +268,7 @@
       background: transparent;
       color: var(--fg-muted);
       border: 1px solid transparent;
-      padding: 8px 16px;
+      padding: 8px 14px;
       border-radius: 8px;
       font-size: 13px;
       font-weight: 500;
@@ -306,17 +285,16 @@
       color: #fff;
       background: var(--surface-elevated);
       border-color: var(--border);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     }
 
-    /* Workspace Studio Grid */
+    /* Studio Grid */
     .studio-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
 
-    @media (max-width: 940px) {
+    @media (max-width: 900px) {
       .studio-grid { grid-template-columns: 1fr; }
     }
 
@@ -327,12 +305,10 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: border-color 0.2s ease;
+      transition: border-color 0.15s ease;
     }
 
-    .editor-card:hover {
-      border-color: var(--border-hover);
-    }
+    .editor-card:hover { border-color: var(--border-hover); }
 
     .editor-header {
       background: var(--surface-elevated);
@@ -352,14 +328,11 @@
       color: var(--fg-muted);
     }
 
-    .dots {
-      display: flex;
-      gap: 6px;
-    }
+    .dots { display: flex; gap: 6px; }
 
     .dot {
-      width: 10px;
-      height: 10px;
+      width: 9px;
+      height: 9px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.12);
     }
@@ -369,8 +342,7 @@
       font-weight: 600;
       padding: 2px 8px;
       border-radius: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.02em;
     }
 
     .tag-danger { background: var(--danger-subtle); color: var(--danger); border: 1px solid var(--danger-border); }
@@ -378,7 +350,7 @@
 
     textarea.code-area {
       width: 100%;
-      height: 290px;
+      height: 280px;
       background: #000000;
       color: #e6edf3;
       border: none;
@@ -388,7 +360,6 @@
       line-height: 1.6;
       resize: vertical;
       outline: none;
-      tab-size: 2;
     }
 
     .card-footer {
@@ -406,28 +377,25 @@
       background: #ffffff;
       color: #000000;
       border: none;
-      padding: 8px 18px;
-      border-radius: 8px;
+      padding: 8px 16px;
+      border-radius: 6px;
       font-weight: 600;
       font-size: 13px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.15s ease;
+      transition: background 0.15s ease;
     }
 
-    .btn-action-primary:hover {
-      background: #e6e6e6;
-      box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
-    }
+    .btn-action-primary:hover { background: #e5e5e5; }
 
     .btn-action-secondary {
       background: var(--surface-elevated);
       color: var(--fg);
       border: 1px solid var(--border);
-      padding: 8px 16px;
-      border-radius: 8px;
+      padding: 8px 14px;
+      border-radius: 6px;
       font-weight: 500;
       font-size: 13px;
       cursor: pointer;
@@ -449,7 +417,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 14px;
-      min-height: 90px;
+      min-height: 80px;
     }
 
     .audit-console-title {
@@ -465,11 +433,10 @@
     }
 
     .audit-item {
-      padding: 10px 14px;
+      padding: 10px 12px;
       border-radius: 6px;
       margin-bottom: 8px;
-      font-size: 12px;
-      font-family: var(--font-mono);
+      font-size: 13px;
       display: flex;
       align-items: flex-start;
       gap: 10px;
@@ -496,7 +463,7 @@
       border: 1px solid var(--emerald-border);
     }
 
-    /* Invariant Comparison Matrix */
+    /* Before & After Table */
     .matrix-wrapper {
       margin-top: 64px;
       background: var(--surface);
@@ -508,15 +475,13 @@
     .matrix-header {
       padding: 20px 24px;
       border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
     }
 
     .matrix-title {
       font-size: 18px;
       font-weight: 700;
       letter-spacing: -0.02em;
+      margin-bottom: 4px;
     }
 
     .matrix-subtitle {
@@ -548,15 +513,11 @@
       vertical-align: middle;
     }
 
-    table.matrix-table tr:last-child td {
-      border-bottom: none;
-    }
+    table.matrix-table tr:last-child td { border-bottom: none; }
 
-    table.matrix-table tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
-    }
+    table.matrix-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
-    .code-inline-danger {
+    .code-pill-danger {
       font-family: var(--font-mono);
       font-size: 12px;
       color: #ff9f97;
@@ -564,9 +525,10 @@
       padding: 4px 8px;
       border-radius: 4px;
       border: 1px solid rgba(255, 69, 58, 0.2);
+      display: inline-block;
     }
 
-    .code-inline-success {
+    .code-pill-success {
       font-family: var(--font-mono);
       font-size: 12px;
       color: #88ffcc;
@@ -574,12 +536,13 @@
       padding: 4px 8px;
       border-radius: 4px;
       border: 1px solid rgba(0, 220, 130, 0.2);
+      display: inline-block;
     }
 
     /* Footer */
     footer {
       border-top: 1px solid var(--border);
-      padding: 40px 24px;
+      padding: 36px 24px;
       text-align: center;
       color: var(--fg-muted);
       font-size: 13px;
@@ -589,31 +552,27 @@
     footer a {
       color: var(--fg);
       text-decoration: none;
-      transition: color 0.15s ease;
     }
 
-    footer a:hover {
-      text-decoration: underline;
-    }
+    footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
 
-  <!-- Sticky Vercel Navbar -->
+  <!-- Navigation -->
   <nav>
     <div class="nav-inner">
       <a href="https://github.com/carbonthecoder/secure-code" class="brand">
         <div class="brand-logo">?</div>
         <span class="brand-name">secure-code</span>
-        <span class="brand-badge">v1.0.0</span>
+        <span class="brand-badge">open source</span>
       </a>
 
       <div class="nav-links">
-        <a href="#playground" class="nav-link">Playground</a>
-        <a href="https://github.com/carbonthecoder/secure-code#the-4-hidden-ai-traps-solved" class="nav-link" target="_blank">Doctrine</a>
-        <a href="https://github.com/carbonthecoder/secure-code/blob/main/CHEATSHEET.md" class="nav-link" target="_blank">Cheatsheet</a>
+        <a href="#playground" class="nav-link">Interactive Demo</a>
+        <a href="https://github.com/carbonthecoder/secure-code/blob/main/CHEATSHEET.md" class="nav-link" target="_blank">1-Page Cheatsheet</a>
         <a href="https://github.com/carbonthecoder/secure-code" target="_blank" class="btn-github">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
           Star on GitHub
         </a>
       </div>
@@ -623,19 +582,19 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-pill">
-      <span class="pulse-dot"></span>
-      <span>Enterprise DevSecOps & SRE Standard</span>
+      <span class="pill-indicator"></span>
+      <span>Safety Seatbelt for AI Coding</span>
     </div>
-    <h1 class="hero-title">Stop AI assistants from shipping vulnerable code.</h1>
+    <h1 class="hero-title">Stop Cursor and Claude from quietly breaking your app.</h1>
     <p class="hero-subtitle">
-      The open-source production security & sub-millisecond performance doctrine for Cursor, Claude Code, Antigravity, and GitHub Copilot.
+      AI writes code fast, but forgets basic safety rules. It accidentally lets users see each other's private data, messes up money math, and writes hackable queries. <strong>secure-code</strong> adds 1 file to your project so your AI stops making these mistakes.
     </p>
 
     <!-- 1-Click Terminal Quickstart -->
     <div class="cli-bar">
       <span class="cli-text"><span class="cli-prompt">$</span>npx github:carbonthecoder/secure-code inject</span>
       <button class="btn-copy" onclick="copyCommand('npx github:carbonthecoder/secure-code inject')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
         <span id="copy-btn-text">Copy</span>
       </button>
     </div>
@@ -646,11 +605,11 @@
     
     <!-- Presets Tabs Bar -->
     <div class="tabs-bar">
-      <button class="tab-btn active" onclick="loadSample('idor', this)">IDOR Flaw</button>
-      <button class="tab-btn" onclick="loadSample('timing', this)">Timing Attack</button>
-      <button class="tab-btn" onclick="loadSample('money', this)">Float Currency</button>
-      <button class="tab-btn" onclick="loadSample('sqli', this)">SQL Injection</button>
-      <button class="tab-btn" onclick="loadSample('clean', this)">Clean Invariant</button>
+      <button class="tab-btn active" onclick="loadSample('idor', this)">User Data Leaks</button>
+      <button class="tab-btn" onclick="loadSample('timing', this)">Easy-to-Crack Keys</button>
+      <button class="tab-btn" onclick="loadSample('money', this)">Broken Money Math</button>
+      <button class="tab-btn" onclick="loadSample('sqli', this)">Database Breaches</button>
+      <button class="tab-btn" onclick="loadSample('clean', this)">Safe & Protected</button>
     </div>
 
     <!-- Dual-Column Studio Workspace -->
@@ -667,7 +626,7 @@
             </div>
             <span>api/document.ts</span>
           </div>
-          <span class="tag-badge tag-danger" id="left-tag">Vulnerable Pattern</span>
+          <span class="tag-badge tag-danger" id="left-tag">Unsafe AI Output</span>
         </div>
 
         <textarea id="code-input" class="code-area" spellcheck="false" oninput="runAudit()"></textarea>
@@ -675,20 +634,19 @@
         <div class="card-footer">
           <div style="display: flex; gap: 8px;">
             <button class="btn-action-primary" onclick="runAudit()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-              Run Audit
+              Check This Code
             </button>
             <button class="btn-action-secondary" onclick="hardenCode()">
-              ? Auto-Harden
+              Fix It Automatically
             </button>
           </div>
-          <span style="font-size: 11px; color: var(--fg-subtle); font-family: var(--font-mono);">Live Auditor Ready</span>
+          <span style="font-size: 11px; color: var(--fg-subtle); font-family: var(--font-mono);">Live Scanner Active</span>
         </div>
 
         <div style="padding: 16px; background: var(--surface);">
           <div class="audit-console">
             <div class="audit-console-title">
-              <span>Security & Performance Audit</span>
+              <span>Security & Safety Check</span>
               <span id="audit-count" style="color: var(--fg-muted);">1 Issue Detected</span>
             </div>
             <div id="audit-output"></div>
@@ -696,7 +654,7 @@
         </div>
       </div>
 
-      <!-- Right Panel: Hardened Invariant Reference -->
+      <!-- Right Panel: Hardened Code Reference -->
       <div class="editor-card">
         <div class="editor-header">
           <div class="editor-file">
@@ -705,24 +663,24 @@
               <div class="dot"></div>
               <div class="dot"></div>
             </div>
-            <span>api/document.hardened.ts</span>
+            <span>api/document.safe.ts</span>
           </div>
-          <span class="tag-badge tag-success">secure-code Standard</span>
+          <span class="tag-badge tag-success">Safe Production Code</span>
         </div>
 
         <textarea id="hardened-output" class="code-area" spellcheck="false" readonly></textarea>
 
         <div class="card-footer">
           <button class="btn-action-secondary" onclick="copyHardened()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            Copy Hardened Code
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span id="copy-safe-btn">Copy Safe Code</span>
           </button>
-          <span style="font-size: 11px; color: var(--emerald); font-family: var(--font-mono);">? Invariants Verified</span>
+          <span style="font-size: 11px; color: var(--emerald); font-family: var(--font-mono);">Checked & Verified</span>
         </div>
 
         <div style="padding: 16px; background: var(--surface);">
-          <div style="background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 14px;">
-            <div style="color: var(--fg-muted); font-size: 12px; margin-bottom: 6px;">Zero-Install Project Scanner:</div>
+          <div style="background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px;">
+            <div style="color: var(--fg-muted); font-size: 12px; margin-bottom: 6px;">Want to scan your existing project for these bugs? Run:</div>
             <code style="font-family: var(--font-mono); font-size: 12px; color: var(--fg);">npx github:carbonthecoder/secure-code audit</code>
           </div>
         </div>
@@ -730,43 +688,53 @@
 
     </div>
 
-    <!-- Invariant Comparison Matrix -->
+    <!-- Simple Before & After Table -->
     <div class="matrix-wrapper">
       <div class="matrix-header">
-        <div>
-          <div class="matrix-title">Production Invariant Matrix</div>
-          <div class="matrix-subtitle">Side-by-side comparison of typical AI hallucinations vs secure-code standards.</div>
-        </div>
+        <div class="matrix-title">What AI Writes vs What It Writes With secure-code</div>
+        <div class="matrix-subtitle">Real examples showing how 1 simple rule prevents embarrassing mistakes.</div>
       </div>
 
       <table class="matrix-table">
         <thead>
           <tr>
-            <th>Security Domain</th>
-            <th>Vanilla AI Anti-Pattern</th>
-            <th>secure-code Invariant</th>
+            <th>The Mistake</th>
+            <th>What Vanilla AI Writes</th>
+            <th>What It Writes With secure-code</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Data Ownership (IDOR)</strong></td>
-            <td><span class="code-inline-danger">db.find({ id: req.params.id })</span></td>
-            <td><span class="code-inline-success">db.findFirst({ where: { id, tenantId, userId } })</span></td>
+            <td>
+              <strong>User A sees User B's files</strong><br>
+              <span style="color: var(--fg-muted); font-size: 12px;">Forgets to check who owns the record.</span>
+            </td>
+            <td><span class="code-pill-danger">db.find({ id: req.params.id })</span></td>
+            <td><span class="code-pill-success">db.findFirst({ where: { id, userId } })</span></td>
           </tr>
           <tr>
-            <td><strong>Token / HMAC Equality</strong></td>
-            <td><span class="code-inline-danger">if (signature === expectedSecret)</span></td>
-            <td><span class="code-inline-success">crypto.timingSafeEqual(sigBuf, expBuf)</span></td>
+            <td>
+              <strong>Hackers easily guess API keys</strong><br>
+              <span style="color: var(--fg-muted); font-size: 12px;">Using standard checks leaks characters via time.</span>
+            </td>
+            <td><span class="code-pill-danger">if (signature === expectedSecret)</span></td>
+            <td><span class="code-pill-success">crypto.timingSafeEqual(sigBuf, expBuf)</span></td>
           </tr>
           <tr>
-            <td><strong>Financial Arithmetic</strong></td>
-            <td><span class="code-inline-danger">total += price * 0.0825</span></td>
-            <td><span class="code-inline-success">(cents * 825n + 5000n) / 10000n</span></td>
+            <td>
+              <strong>Money balance is quietly wrong</strong><br>
+              <span style="color: var(--fg-muted); font-size: 12px;">Decimals in computers drift (0.1 + 0.2 !== 0.3).</span>
+            </td>
+            <td><span class="code-pill-danger">total += price * 0.0825</span></td>
+            <td><span class="code-pill-success">Store integer cents, calculate without floats</span></td>
           </tr>
           <tr>
-            <td><strong>SQL Construction</strong></td>
-            <td><span class="code-inline-danger">db.query(`SELECT * WHERE id = ${id}`)</span></td>
-            <td><span class="code-inline-success">db.query('SELECT * WHERE id = $1', [id])</span></td>
+            <td>
+              <strong>Someone deletes your database</strong><br>
+              <span style="color: var(--fg-muted); font-size: 12px;">Pasting raw user input directly into SQL queries.</span>
+            </td>
+            <td><span class="code-pill-danger">db.query(`WHERE id = ${id}`)</span></td>
+            <td><span class="code-pill-success">db.query('WHERE id = $1', [id])</span></td>
           </tr>
         </tbody>
       </table>
@@ -774,23 +742,23 @@
 
   </main>
 
-  <!-- Vercel Footer -->
+  <!-- Clean Footer -->
   <footer>
     <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
       <div>
-        Created by <a href="https://github.com/carbonthecoder" target="_blank" style="font-weight: 600; color: #fff;">@carbonthecoder</a> • Open Source (MIT)
+        Made for developers building with AI • Free & Open Source (MIT)
       </div>
       <div style="display: flex; gap: 20px;">
-        <a href="https://github.com/carbonthecoder/secure-code" target="_blank">GitHub</a>
+        <a href="https://github.com/carbonthecoder/secure-code" target="_blank">GitHub Repository</a>
+        <a href="https://github.com/carbonthecoder/secure-code/blob/main/CHEATSHEET.md" target="_blank">Cheatsheet</a>
         <a href="https://github.com/carbonthecoder/secure-code/blob/main/SECURITY.md" target="_blank">Security Policy</a>
-        <a href="https://github.com/carbonthecoder/secure-code/blob/main/CONTRIBUTING.md" target="_blank">Contributing</a>
       </div>
     </div>
   </footer>
 
   <script>
     const SAMPLES = {
-      idor: `// Vulnerable: Direct Object Reference (IDOR)
+      idor: `// Unsafe: Anyone can change the ID in the URL to view any user's private file!
 app.get("/api/documents/:id", async (req, res) => {
   const doc = await db.document.findUnique({
     where: { id: req.params.id }
@@ -798,7 +766,7 @@ app.get("/api/documents/:id", async (req, res) => {
   res.json(doc);
 });`,
 
-      timing: `// Vulnerable: Microsecond Timing Attack
+      timing: `// Unsafe: Checking passwords or webhook keys like this lets hackers guess them!
 app.post("/webhook", (req, res) => {
   const signature = req.headers["x-signature"];
   if (signature === EXPECTED_SECRET) {
@@ -807,7 +775,7 @@ app.post("/webhook", (req, res) => {
   res.status(401).send("Invalid");
 });`,
 
-      money: `// Vulnerable: Floating-Point Financial Drift
+      money: `// Unsafe: Float decimals drift in computers (0.1 + 0.2 = 0.30000000000000004)
 function calculateOrderTotal(items) {
   let total = 0;
   for (const item of items) {
@@ -817,32 +785,31 @@ function calculateOrderTotal(items) {
   return total + tax;
 }`,
 
-      sqli: `// Vulnerable: SQL String Interpolation
+      sqli: `// Unsafe: Pasting user text directly into SQL allows hackers to delete your tables!
 async function getUser(id) {
   return await db.query(\`SELECT * FROM users WHERE id = '\${id}'\`);
 }`,
 
-      clean: `// Hardened: Parameterized & Tenant-Scoped
+      clean: `// Safe: Checks user ownership and validates session before returning data
 app.get("/api/documents/:id", requireAuth, async (req, res) => {
   const doc = await db.document.findFirst({
     where: {
       id: req.params.id,
-      tenantId: req.session.user.tenantId,
-      userId: req.session.user.id
+      userId: req.session.user.id // Only returns if the logged-in user owns it!
     }
   });
-  if (!doc) return res.status(404).json({ error: "Not found" });
+  if (!doc) return res.status(404).json({ error: "Document not found" });
   res.json(doc);
 });`
     };
 
     const HARDENED_TEMPLATES = {
-      idor: `// ??? SECURE-CODE Hardened (Zero IDOR / Tenant-Scoped)
+      idor: `// Safe: The query strictly verifies that the logged-in user owns this document!
 app.get("/api/documents/:id", requireAuth, async (req, res) => {
   const doc = await db.document.findFirst({
     where: {
       id: req.params.id,
-      tenantId: req.session.user.tenantId, // Scoped to active tenant
+      tenantId: req.session.user.tenantId, // Scoped to organization
       userId: req.session.user.id          // Scoped to record owner
     }
   });
@@ -850,7 +817,7 @@ app.get("/api/documents/:id", requireAuth, async (req, res) => {
   res.json(doc);
 });`,
 
-      timing: `// ??? SECURE-CODE Hardened (Constant-Time Verification)
+      timing: `// Safe: Constant-time comparison prevents timing attacks
 import crypto from "crypto";
 
 app.post("/webhook", (req, res) => {
@@ -860,6 +827,7 @@ app.post("/webhook", (req, res) => {
   const sigBuffer = Buffer.from(signature, "utf8");
   const expBuffer = Buffer.from(EXPECTED_SECRET, "utf8");
 
+  // Compares every byte equally without leaking timing clues
   if (sigBuffer.length !== expBuffer.length || !crypto.timingSafeEqual(sigBuffer, expBuffer)) {
     return res.status(401).send("Invalid signature");
   }
@@ -867,18 +835,18 @@ app.post("/webhook", (req, res) => {
   res.send("OK");
 });`,
 
-      money: `// ??? SECURE-CODE Hardened (Integer Cents & Banker's Rounding)
+      money: `// Safe: Store prices in integer cents. Never do decimal math for money!
 function calculateOrderTotal(items) {
   let subtotalCents = 0n;
   for (const item of items) {
     subtotalCents += item.priceInCents * BigInt(item.quantity);
   }
-  // 8.25% tax in basis points (825/10000) with half-up rounding
+  // 8.25% tax in basis points with half-up rounding (zero decimal drift)
   const taxCents = (subtotalCents * 825n + 5000n) / 10000n;
   return { subtotalCents, taxCents, totalCents: subtotalCents + taxCents };
 }`,
 
-      sqli: `// ??? SECURE-CODE Hardened (Parameterized Query)
+      sqli: `// Safe: Parameterized query ($1, $2) tells the database to treat input as text, never code!
 async function getUser(id, tenantId) {
   return await db.query(
     "SELECT * FROM users WHERE id = $1 AND tenant_id = $2",
@@ -886,7 +854,7 @@ async function getUser(id, tenantId) {
   );
 }`,
 
-      clean: `// ??? SECURE-CODE: This snippet satisfies all production invariants.`
+      clean: `// Safe: This code follows all safety rules. No leaks, no hacks.`
     };
 
     let currentSample = "idor";
@@ -901,10 +869,10 @@ async function getUser(id, tenantId) {
       
       const leftTag = document.getElementById("left-tag");
       if (key === 'clean') {
-        leftTag.textContent = "Clean Invariant";
+        leftTag.textContent = "Safe Code";
         leftTag.className = "tag-badge tag-success";
       } else {
-        leftTag.textContent = "Vulnerable Pattern";
+        leftTag.textContent = "Unsafe AI Output";
         leftTag.className = "tag-badge tag-danger";
       }
 
@@ -919,39 +887,35 @@ async function getUser(id, tenantId) {
 
       const issues = [];
 
-      if (/findUnique\s*\(\s*\{\s*where:\s*\{\s*id\b/.test(code) && !/tenantId/.test(code)) {
+      if (/findUnique\s*\(\s*\{\s*where:\s*\{\s*id\b/.test(code) && !/tenantId|userId/.test(code)) {
         issues.push({
           type: "danger",
-          icon: "?",
-          title: "IDOR Vulnerability",
-          desc: "Query fetched by ID alone without verifying tenantId or userId session ownership."
+          title: "User Data Leak Risk",
+          desc: "This query finds a file using only the ID. Any user can type a different ID and see another user's private data. Always check who is logged in (userId)!"
         });
       }
 
       if (/(token|apiKey|signature|secret)\s*===/i.test(code)) {
         issues.push({
           type: "danger",
-          icon: "?",
-          title: "Timing Side-Channel",
-          desc: "Using standard strict equality (===) on secrets allows byte-by-byte timing attacks. Use crypto.timingSafeEqual()."
+          title: "Easy-to-Crack Secret Check",
+          desc: "Using '===' to check secret keys stops on the first wrong character. Hackers can measure server response time in milliseconds to guess the key letter-by-letter."
         });
       }
 
       if (/(SELECT|INSERT|UPDATE|DELETE).*\$\{.*\}/i.test(code)) {
         issues.push({
           type: "danger",
-          icon: "?",
-          title: "SQL Injection Risk",
-          desc: "Raw string interpolation in SQL query. Enforce parameterized query variables ($1, ?)."
+          title: "Database Hack (SQL Injection)",
+          desc: "Putting user variables directly inside SQL code allows attackers to type special commands that dump or delete your entire database. Use parameterized variables ($1, ?)."
         });
       }
 
       if (/(price|amount|balance|total)\s*[:=]\s*(number|float|double)\b/i.test(code) || /\*\s*0\.\d+/.test(code)) {
         issues.push({
           type: "warning",
-          icon: "??",
-          title: "Financial Drift Risk",
-          desc: "Float arithmetic used for currency calculations. Store money in integer minor units (cents) with Banker's rounding."
+          title: "Money Math Mistake",
+          desc: "Computers get confused doing math with decimals (0.1 + 0.2 is not 0.3). User balances will quietly drift over time. Always store money in integer cents."
         });
       }
 
@@ -960,10 +924,9 @@ async function getUser(id, tenantId) {
       if (issues.length === 0) {
         output.innerHTML = `
           <div class="audit-item audit-item-success">
-            <span>?</span>
             <div>
-              <strong>All Invariants Satisfied</strong>
-              <div style="color: #6ee7b7; font-size: 11px; margin-top: 2px;">No unvalidated inputs, timing channels, or float money math detected.</div>
+              <strong>Looks Great! No Obvious Traps Found.</strong>
+              <div style="color: #6ee7b7; font-size: 11px; margin-top: 2px;">This code checks user ownership, keeps secrets safe, and avoids basic AI pitfalls.</div>
             </div>
           </div>
         `;
@@ -971,10 +934,9 @@ async function getUser(id, tenantId) {
         issues.forEach(iss => {
           output.innerHTML += `
             <div class="audit-item audit-item-${iss.type}">
-              <span>${iss.icon}</span>
               <div>
                 <strong>${iss.title}</strong>
-                <div style="font-size: 11px; margin-top: 2px; opacity: 0.9;">${iss.desc}</div>
+                <div style="font-size: 12px; margin-top: 2px; opacity: 0.9;">${iss.desc}</div>
               </div>
             </div>
           `;
@@ -986,7 +948,7 @@ async function getUser(id, tenantId) {
       if (HARDENED_TEMPLATES[currentSample]) {
         document.getElementById("code-input").value = HARDENED_TEMPLATES[currentSample];
         const leftTag = document.getElementById("left-tag");
-        leftTag.textContent = "Auto-Hardened";
+        leftTag.textContent = "Safe Code";
         leftTag.className = "tag-badge tag-success";
         runAudit();
       }
@@ -1002,7 +964,11 @@ async function getUser(id, tenantId) {
 
     function copyHardened() {
       const val = document.getElementById("hardened-output").value;
-      navigator.clipboard.writeText(val);
+      navigator.clipboard.writeText(val).then(() => {
+        const btn = document.getElementById("copy-safe-btn");
+        btn.textContent = "Copied!";
+        setTimeout(() => { btn.textContent = "Copy Safe Code"; }, 2000);
+      });
     }
 
     // Initialize with IDOR sample
