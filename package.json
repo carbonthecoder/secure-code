@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "The Universal Production Security & High-Performance Standard for AI Agents & Modern Web",
   "bin": {
-    "secure-code": "./bin/cli.js"
+    "secure-code": "bin/cli.js"
   },
   "scripts": {
     "test": "node ./tests/test_audit.js",
