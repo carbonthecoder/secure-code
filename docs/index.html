@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>secure-code | Interactive Production Security & Performance Playground</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card: #111827;
+      --card-border: #1f2937;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --primary: #10b981;
+      --primary-hover: #059669;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      padding: 24px;
+    }
+
+    header {
+      max-width: 1200px;
+      margin: 0 auto 32px auto;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--primary);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .container { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .panel-title {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sample-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    button.btn-sample {
+      background: #1f2937;
+      color: var(--text);
+      border: 1px solid #374151;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button.btn-sample:hover {
+      background: #374151;
+      border-color: #4b5563;
+    }
+
+    textarea.code-box {
+      width: 100%;
+      height: 280px;
+      background: #0d1117;
+      color: #e6edf3;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 12px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      resize: vertical;
+      outline: none;
+    }
+
+    textarea.code-box:focus {
+      border-color: var(--primary);
+    }
+
+    .action-row {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    button.btn-primary {
+      background: var(--primary);
+      color: #062b1e;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button.btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .audit-results {
+      margin-top: 16px;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 120px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+
+    .audit-item {
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .audit-danger { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .audit-warning { background: rgba(245, 158, 11, 0.15); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .audit-success { background: rgba(16, 185, 129, 0.15); color: #a7f3d0; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .matrix-section {
+      max-width: 1200px;
+      margin: 40px auto 0 auto;
+    }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+
+    .matrix-table th, .matrix-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--card-border);
+      font-size: 14px;
+    }
+
+    .matrix-table th {
+      background: #1f2937;
+      color: #9ca3af;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">Production Guardrails Engine</div>
+    <h1>🛡️ secure-code Interactive Playground</h1>
+    <p class="subtitle">Test code snippets against strict zero-trust security and sub-millisecond performance invariants in real time.</p>
+  </header>
+
+  <div class="container">
+    <!-- Left Panel: Input & Audit -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">📝 Code Input & Live Audit</span>
+      </div>
+
+      <div class="sample-buttons">
+        <button class="btn-sample" onclick="loadSample('idor')">IDOR Flaw</button>
+        <button class="btn-sample" onclick="loadSample('timing')">Timing Attack</button>
+        <button class="btn-sample" onclick="loadSample('money')">Float Currency</button>
+        <button class="btn-sample" onclick="loadSample('sqli')">SQL Injection</button>
+        <button class="btn-sample" onclick="loadSample('clean')">Clean Invariant</button>
+      </div>
+
+      <textarea id="code-input" class="code-box" placeholder="Paste your code snippet here to analyze..."></textarea>
+
+      <div class="action-row">
+        <button class="btn-primary" onclick="runAudit()">🩺 Run Security Audit</button>
+        <button class="btn-sample" onclick="hardenCode()">⚡ Auto-Harden Code</button>
+      </div>
+
+      <div id="audit-output" class="audit-results">
+        <div style="color: var(--text-muted); text-align: center; padding-top: 36px;">
+          Click "Run Security Audit" or select a preset flaw above.
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel: Hardened Invariant Reference -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">🛡️ Hardened Production Invariant</span>
+      </div>
+
+      <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">
+        Standard code emitted under the <strong>secure-code</strong> standard:
+      </p>
+
+      <textarea id="hardened-output" class="code-box" readonly></textarea>
+
+      <div style="margin-top: 16px; padding: 12px; background: #0d1117; border-radius: 8px; border: 1px solid #30363d;">
+        <div style="color: var(--primary); font-weight: 700; font-size: 13px; margin-bottom: 4px;">🚀 1-Command Terminal Quickstart:</div>
+        <code style="font-family: var(--font-mono); font-size: 12px; color: #9ca3af;">npx secure-code inject</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="matrix-section">
+    <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 16px;">Top Security Invariants Quick Matrix</h2>
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Vulnerable AI Anti-Pattern</th>
+          <th>Hardened secure-code Standard</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Data Ownership</strong></td>
+          <td style="color: #fca5a5;"><code>db.find({ id: req.params.id })</code></td>
+          <td style="color: #a7f3d0;"><code>db.findFirst({ where: { id, tenantId, userId } })</code></td>
+        </tr>
+        <tr>
+          <td><strong>Token Compare</strong></td>
+          <td style="color: #fca5a5;"><code>if (signature === expectedSignature)</code></td>
+          <td style="color: #a7f3d0;"><code>crypto.timingSafeEqual(sigBuffer, expBuffer)</code></td>
+        </tr>
+        <tr>
+          <td><strong>Currency Math</strong></td>
+          <td style="color: #fca5a5;"><code>let tax = price * 0.0825</code></td>
+          <td style="color: #a7f3d0;"><code>(cents * 825n + 5000n) / 10000n</code></td>
+        </tr>
+        <tr>
+          <td><strong>SQL Queries</strong></td>
+          <td style="color: #fca5a5;"><code>db.query(`SELECT * WHERE id = ${id}`)</code></td>
+          <td style="color: #a7f3d0;"><code>db.query('SELECT * WHERE id = $1', [id])</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const SAMPLES = {
+      idor: `// Vulnerable: Direct Object Reference (IDOR)
+app.get("/api/documents/:id", async (req, res) => {
+  const doc = await db.document.findUnique({
+    where: { id: req.params.id }
+  });
+  res.json(doc);
+});`,
+
+      timing: `// Vulnerable: Microsecond Timing Attack
+app.post("/webhook", (req, res) => {
+  const signature = req.headers["x-signature"];
+  if (signature === EXPECTED_SECRET) {
+    return res.send("OK");
+  }
+  res.status(401).send("Invalid");
+});`,
+
+      money: `// Vulnerable: Floating-Point Financial Drift
+function calculateOrderTotal(items) {
+  let total = 0;
+  for (const item of items) {
+    total += item.price * item.quantity;
+  }
+  const tax = total * 0.0825;
+  return total + tax;
+}`,
+
+      sqli: `// Vulnerable: SQL String Interpolation
+async function getUser(id) {
+  return await db.query(\`SELECT * FROM users WHERE id = '\${id}'\`);
+}`,
+
+      clean: `// Hardened: Parameterized & Tenant-Scoped
+app.get("/api/documents/:id", requireAuth, async (req, res) => {
+  const doc = await db.document.findFirst({
+    where: {
+      id: req.params.id,
+      tenantId: req.session.user.tenantId,
+      userId: req.session.user.id
+    }
+  });
+  if (!doc) return res.status(404).json({ error: "Not found" });
+  res.json(doc);
+});`
+    };
+
+    const HARDENED_TEMPLATES = {
+      idor: `// 🛡️ SECURE-CODE Hardened (Zero IDOR / Tenant-Scoped)
+app.get("/api/documents/:id", requireAuth, async (req, res) => {
+  const doc = await db.document.findFirst({
+    where: {
+      id: req.params.id,
+      tenantId: req.session.user.tenantId, // Scoped to active tenant
+      userId: req.session.user.id          // Scoped to record owner
+    }
+  });
+  if (!doc) return res.status(404).json({ error: "Document not found" });
+  res.json(doc);
+});`,
+
+      timing: `// 🛡️ SECURE-CODE Hardened (Constant-Time Verification)
+import crypto from "crypto";
+
+app.post("/webhook", (req, res) => {
+  const signature = req.headers["x-signature"];
+  if (typeof signature !== "string") return res.status(400).send("Bad request");
+
+  const sigBuffer = Buffer.from(signature, "utf8");
+  const expBuffer = Buffer.from(EXPECTED_SECRET, "utf8");
+
+  if (sigBuffer.length !== expBuffer.length || !crypto.timingSafeEqual(sigBuffer, expBuffer)) {
+    return res.status(401).send("Invalid signature");
+  }
+
+  res.send("OK");
+});`,
+
+      money: `// 🛡️ SECURE-CODE Hardened (Integer Cents & Banker's Rounding)
+function calculateOrderTotal(items) {
+  let subtotalCents = 0n;
+  for (const item of items) {
+    subtotalCents += item.priceInCents * BigInt(item.quantity);
+  }
+  // 8.25% tax in basis points (825/10000) with half-up rounding
+  const taxCents = (subtotalCents * 825n + 5000n) / 10000n;
+  return { subtotalCents, taxCents, totalCents: subtotalCents + taxCents };
+}`,
+
+      sqli: `// 🛡️ SECURE-CODE Hardened (Parameterized Query)
+async function getUser(id, tenantId) {
+  return await db.query(
+    "SELECT * FROM users WHERE id = $1 AND tenant_id = $2",
+    [id, tenantId]
+  );
+}`,
+
+      clean: `// 🛡️ SECURE-CODE: This snippet satisfies all production invariants.`
+    };
+
+    let currentSample = "idor";
+
+    function loadSample(key) {
+      currentSample = key;
+      document.getElementById("code-input").value = SAMPLES[key];
+      document.getElementById("hardened-output").value = HARDENED_TEMPLATES[key];
+      runAudit();
+    }
+
+    function runAudit() {
+      const code = document.getElementById("code-input").value;
+      const output = document.getElementById("audit-output");
+      output.innerHTML = "";
+
+      const issues = [];
+
+      if (/findUnique\s*\(\s*\{\s*where:\s*\{\s*id\b/.test(code) && !/tenantId/.test(code)) {
+        issues.push({
+          type: "danger",
+          icon: "❌",
+          text: "IDOR Vulnerability: Fetching record by client ID alone without tenantId or userId scope."
+        });
+      }
+
+      if (/(token|apiKey|signature|secret)\s*===/i.test(code)) {
+        issues.push({
+          type: "danger",
+          icon: "❌",
+          text: "Timing Side-Channel: Using strict equality (===) to compare security tokens. Use crypto.timingSafeEqual()."
+        });
+      }
+
+      if (/(SELECT|INSERT|UPDATE|DELETE).*\$\{.*\}/i.test(code)) {
+        issues.push({
+          type: "danger",
+          icon: "❌",
+          text: "SQL Injection Risk: Detected raw string interpolation in SQL query. Use parameterized placeholders."
+        });
+      }
+
+      if (/(price|amount|balance|total)\s*[:=]\s*(number|float|double)\b/i.test(code) || /\*\s*0\.\d+/.test(code)) {
+        issues.push({
+          type: "warning",
+          icon: "⚠️",
+          text: "Financial Drift Risk: Float math used for currency calculation. Use integer minor units (cents) or Decimal."
+        });
+      }
+
+      if (issues.length === 0) {
+        output.innerHTML = `
+          <div class="audit-item audit-success">
+            <span>✅</span>
+            <span>Clean Audit: No obvious security or performance anti-patterns detected!</span>
+          </div>
+        `;
+      } else {
+        issues.forEach(iss => {
+          output.innerHTML += `
+            <div class="audit-item audit-${iss.type}">
+              <span>${iss.icon}</span>
+              <span>${iss.text}</span>
+            </div>
+          `;
+        });
+      }
+    }
+
+    function hardenCode() {
+      if (HARDENED_TEMPLATES[currentSample]) {
+        document.getElementById("code-input").value = HARDENED_TEMPLATES[currentSample];
+        runAudit();
+      }
+    }
+
+    // Initialize with IDOR sample
+    loadSample('idor');
+  </script>
+</body>
+</html>
