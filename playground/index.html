@@ -3,311 +3,790 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>secure-code | Interactive Production Security & Performance Playground</title>
+  <title>secure-code | Universal Production Security & Performance Standard for AI Agents</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Geist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #090d16;
-      --card: #111827;
-      --card-border: #1f2937;
-      --text: #f3f4f6;
-      --text-muted: #9ca3af;
-      --primary: #10b981;
-      --primary-hover: #059669;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --bg: #000000;
+      --surface: #0a0a0a;
+      --surface-elevated: #111111;
+      --surface-hover: #161616;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.2);
+      --border-active: rgba(255, 255, 255, 0.35);
+      --fg: #ededed;
+      --fg-muted: #888888;
+      --fg-subtle: #555555;
+      --emerald: #00dc82;
+      --emerald-subtle: rgba(0, 220, 130, 0.1);
+      --emerald-border: rgba(0, 220, 130, 0.25);
+      --danger: #ff453a;
+      --danger-subtle: rgba(255, 69, 58, 0.1);
+      --danger-border: rgba(255, 69, 58, 0.25);
+      --warning: #f5a623;
+      --warning-subtle: rgba(245, 166, 35, 0.1);
+      --warning-border: rgba(245, 166, 35, 0.25);
+      --blue: #0070f3;
+      --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       background-color: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--fg);
+      font-family: var(--font-sans);
       line-height: 1.5;
-      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    header {
+    /* Ambient Vercel Spotlight */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 480px;
+      background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.09) 0%, rgba(0, 0, 0, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(0, 0, 0, 0.75);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
       max-width: 1200px;
-      margin: 0 auto 32px auto;
-      text-align: center;
+      margin: 0 auto;
+      height: 64px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .badge {
-      display: inline-block;
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--primary);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 4px 12px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .brand-logo {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .brand-name {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-badge {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--fg-muted);
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-link {
+      color: var(--fg-muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.15s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--fg);
+    }
+
+    .btn-github {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--fg);
+      color: #000;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-github:hover {
+      background: #ffffff;
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 64px auto 48px auto;
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
       border-radius: 9999px;
       font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      font-weight: 500;
+      color: var(--fg-muted);
+      margin-bottom: 24px;
+      letter-spacing: 0.02em;
+      transition: border-color 0.2s ease;
     }
 
-    h1 {
-      font-size: 32px;
+    .hero-pill:hover {
+      border-color: var(--border-hover);
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--emerald);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    h1.hero-title {
+      font-size: clamp(34px, 5vw, 56px);
       font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+
+    p.hero-subtitle {
+      font-size: clamp(16px, 2vw, 19px);
+      color: var(--fg-muted);
+      line-height: 1.6;
+      max-width: 680px;
+      margin: 0 auto 32px auto;
+      font-weight: 400;
+    }
+
+    /* Terminal Quickstart Bar */
+    .cli-bar {
+      display: inline-flex;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 6px 6px 6px 16px;
+      gap: 12px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .cli-bar:hover {
+      border-color: var(--border-hover);
+    }
+
+    .cli-text {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--fg);
+    }
+
+    .cli-prompt {
+      color: var(--fg-subtle);
+      user-select: none;
+      margin-right: 4px;
+    }
+
+    .btn-copy {
+      background: var(--surface-elevated);
+      color: var(--fg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-copy:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-hover);
+    }
+
+    /* Main Workspace Container */
+    .main-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      margin: 0 auto 80px auto;
+      padding: 0 24px;
+    }
+
+    /* Preset Tabs */
+    .tabs-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: transparent;
+      color: var(--fg-muted);
+      border: 1px solid transparent;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--fg);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .tab-btn.active {
       color: #fff;
-      margin-bottom: 8px;
+      background: var(--surface-elevated);
+      border-color: var(--border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     }
 
-    p.subtitle {
-      color: var(--text-muted);
-      font-size: 16px;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
+    /* Workspace Studio Grid */
+    .studio-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      gap: 20px;
     }
 
-    @media (max-width: 900px) {
-      .container { grid-template-columns: 1fr; }
+    @media (max-width: 940px) {
+      .studio-grid { grid-template-columns: 1fr; }
     }
 
-    .panel {
-      background: var(--card);
-      border: 1px solid var(--card-border);
+    .editor-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 20px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
+      transition: border-color 0.2s ease;
     }
 
-    .panel-header {
+    .editor-card:hover {
+      border-color: var(--border-hover);
+    }
+
+    .editor-header {
+      background: var(--surface-elevated);
+      padding: 12px 16px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--border);
     }
 
-    .panel-title {
-      font-size: 16px;
-      font-weight: 700;
+    .editor-file {
       display: flex;
       align-items: center;
       gap: 8px;
-    }
-
-    .sample-buttons {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-
-    button.btn-sample {
-      background: #1f2937;
-      color: var(--text);
-      border: 1px solid #374151;
-      padding: 6px 12px;
-      border-radius: 6px;
+      font-family: var(--font-mono);
       font-size: 12px;
-      cursor: pointer;
-      transition: all 0.2s;
+      color: var(--fg-muted);
     }
 
-    button.btn-sample:hover {
-      background: #374151;
-      border-color: #4b5563;
+    .dots {
+      display: flex;
+      gap: 6px;
     }
 
-    textarea.code-box {
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .tag-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tag-danger { background: var(--danger-subtle); color: var(--danger); border: 1px solid var(--danger-border); }
+    .tag-success { background: var(--emerald-subtle); color: var(--emerald); border: 1px solid var(--emerald-border); }
+
+    textarea.code-area {
       width: 100%;
-      height: 280px;
-      background: #0d1117;
+      height: 290px;
+      background: #000000;
       color: #e6edf3;
-      border: 1px solid #30363d;
-      border-radius: 8px;
-      padding: 12px;
+      border: none;
+      padding: 16px;
       font-family: var(--font-mono);
       font-size: 13px;
+      line-height: 1.6;
       resize: vertical;
       outline: none;
+      tab-size: 2;
     }
 
-    textarea.code-box:focus {
-      border-color: var(--primary);
-    }
-
-    .action-row {
-      margin-top: 16px;
+    .card-footer {
+      padding: 14px 16px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    button.btn-primary {
-      background: var(--primary);
-      color: #062b1e;
+    .btn-action-primary {
+      background: #ffffff;
+      color: #000000;
       border: none;
-      padding: 10px 20px;
+      padding: 8px 18px;
       border-radius: 8px;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    button.btn-primary:hover {
-      background: var(--primary-hover);
-    }
-
-    .audit-results {
-      margin-top: 16px;
-      background: #0d1117;
-      border: 1px solid #30363d;
-      border-radius: 8px;
-      padding: 16px;
-      min-height: 120px;
-      font-family: var(--font-mono);
+      font-weight: 600;
       font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action-primary:hover {
+      background: #e6e6e6;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-action-secondary {
+      background: var(--surface-elevated);
+      color: var(--fg);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action-secondary:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-hover);
+    }
+
+    /* Live Audit Results Console */
+    .audit-console {
+      margin-top: 16px;
+      background: #000000;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 90px;
+    }
+
+    .audit-console-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--fg-subtle);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .audit-item {
-      padding: 8px 12px;
+      padding: 10px 14px;
       border-radius: 6px;
       margin-bottom: 8px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .audit-item:last-child { margin-bottom: 0; }
+
+    .audit-item-danger {
+      background: var(--danger-subtle);
+      color: #ff9f97;
+      border: 1px solid var(--danger-border);
+    }
+
+    .audit-item-warning {
+      background: var(--warning-subtle);
+      color: #ffd180;
+      border: 1px solid var(--warning-border);
+    }
+
+    .audit-item-success {
+      background: var(--emerald-subtle);
+      color: #88ffcc;
+      border: 1px solid var(--emerald-border);
+    }
+
+    /* Invariant Comparison Matrix */
+    .matrix-wrapper {
+      margin-top: 64px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .matrix-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
     }
 
-    .audit-danger { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
-    .audit-warning { background: rgba(245, 158, 11, 0.15); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.3); }
-    .audit-success { background: rgba(16, 185, 129, 0.15); color: #a7f3d0; border: 1px solid rgba(16, 185, 129, 0.3); }
-
-    .matrix-section {
-      max-width: 1200px;
-      margin: 40px auto 0 auto;
+    .matrix-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
 
-    .matrix-table {
+    .matrix-subtitle {
+      font-size: 13px;
+      color: var(--fg-muted);
+    }
+
+    table.matrix-table {
       width: 100%;
       border-collapse: collapse;
-      background: var(--card);
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid var(--card-border);
-    }
-
-    .matrix-table th, .matrix-table td {
-      padding: 12px 16px;
       text-align: left;
-      border-bottom: 1px solid var(--card-border);
-      font-size: 14px;
     }
 
-    .matrix-table th {
-      background: #1f2937;
-      color: #9ca3af;
+    table.matrix-table th {
+      background: var(--surface-elevated);
+      color: var(--fg-muted);
+      font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
-      font-size: 12px;
       letter-spacing: 0.05em;
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    table.matrix-table td {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    table.matrix-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    table.matrix-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .code-inline-danger {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #ff9f97;
+      background: rgba(255, 69, 58, 0.08);
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 69, 58, 0.2);
+    }
+
+    .code-inline-success {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #88ffcc;
+      background: rgba(0, 220, 130, 0.08);
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 220, 130, 0.2);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--fg-muted);
+      font-size: 13px;
+      margin-top: 80px;
+    }
+
+    footer a {
+      color: var(--fg);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="badge">Production Guardrails Engine</div>
-    <h1>🛡️ secure-code Interactive Playground</h1>
-    <p class="subtitle">Test code snippets against strict zero-trust security and sub-millisecond performance invariants in real time.</p>
-  </header>
+  <!-- Sticky Vercel Navbar -->
+  <nav>
+    <div class="nav-inner">
+      <a href="https://github.com/carbonthecoder/secure-code" class="brand">
+        <div class="brand-logo">?</div>
+        <span class="brand-name">secure-code</span>
+        <span class="brand-badge">v1.0.0</span>
+      </a>
 
-  <div class="container">
-    <!-- Left Panel: Input & Audit -->
-    <div class="panel">
-      <div class="panel-header">
-        <span class="panel-title">📝 Code Input & Live Audit</span>
+      <div class="nav-links">
+        <a href="#playground" class="nav-link">Playground</a>
+        <a href="https://github.com/carbonthecoder/secure-code#the-4-hidden-ai-traps-solved" class="nav-link" target="_blank">Doctrine</a>
+        <a href="https://github.com/carbonthecoder/secure-code/blob/main/CHEATSHEET.md" class="nav-link" target="_blank">Cheatsheet</a>
+        <a href="https://github.com/carbonthecoder/secure-code" target="_blank" class="btn-github">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          Star on GitHub
+        </a>
       </div>
+    </div>
+  </nav>
 
-      <div class="sample-buttons">
-        <button class="btn-sample" onclick="loadSample('idor')">IDOR Flaw</button>
-        <button class="btn-sample" onclick="loadSample('timing')">Timing Attack</button>
-        <button class="btn-sample" onclick="loadSample('money')">Float Currency</button>
-        <button class="btn-sample" onclick="loadSample('sqli')">SQL Injection</button>
-        <button class="btn-sample" onclick="loadSample('clean')">Clean Invariant</button>
-      </div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-pill">
+      <span class="pulse-dot"></span>
+      <span>Enterprise DevSecOps & SRE Standard</span>
+    </div>
+    <h1 class="hero-title">Stop AI assistants from shipping vulnerable code.</h1>
+    <p class="hero-subtitle">
+      The open-source production security & sub-millisecond performance doctrine for Cursor, Claude Code, Antigravity, and GitHub Copilot.
+    </p>
 
-      <textarea id="code-input" class="code-box" placeholder="Paste your code snippet here to analyze..."></textarea>
+    <!-- 1-Click Terminal Quickstart -->
+    <div class="cli-bar">
+      <span class="cli-text"><span class="cli-prompt">$</span>npx github:carbonthecoder/secure-code inject</span>
+      <button class="btn-copy" onclick="copyCommand('npx github:carbonthecoder/secure-code inject')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        <span id="copy-btn-text">Copy</span>
+      </button>
+    </div>
+  </section>
 
-      <div class="action-row">
-        <button class="btn-primary" onclick="runAudit()">🩺 Run Security Audit</button>
-        <button class="btn-sample" onclick="hardenCode()">⚡ Auto-Harden Code</button>
-      </div>
+  <!-- Interactive Studio -->
+  <main class="main-wrapper" id="playground">
+    
+    <!-- Presets Tabs Bar -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" onclick="loadSample('idor', this)">IDOR Flaw</button>
+      <button class="tab-btn" onclick="loadSample('timing', this)">Timing Attack</button>
+      <button class="tab-btn" onclick="loadSample('money', this)">Float Currency</button>
+      <button class="tab-btn" onclick="loadSample('sqli', this)">SQL Injection</button>
+      <button class="tab-btn" onclick="loadSample('clean', this)">Clean Invariant</button>
+    </div>
 
-      <div id="audit-output" class="audit-results">
-        <div style="color: var(--text-muted); text-align: center; padding-top: 36px;">
-          Click "Run Security Audit" or select a preset flaw above.
+    <!-- Dual-Column Studio Workspace -->
+    <div class="studio-grid">
+      
+      <!-- Left Panel: Input Code & Audit Console -->
+      <div class="editor-card">
+        <div class="editor-header">
+          <div class="editor-file">
+            <div class="dots">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+            <span>api/document.ts</span>
+          </div>
+          <span class="tag-badge tag-danger" id="left-tag">Vulnerable Pattern</span>
+        </div>
+
+        <textarea id="code-input" class="code-area" spellcheck="false" oninput="runAudit()"></textarea>
+
+        <div class="card-footer">
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-action-primary" onclick="runAudit()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              Run Audit
+            </button>
+            <button class="btn-action-secondary" onclick="hardenCode()">
+              ? Auto-Harden
+            </button>
+          </div>
+          <span style="font-size: 11px; color: var(--fg-subtle); font-family: var(--font-mono);">Live Auditor Ready</span>
+        </div>
+
+        <div style="padding: 16px; background: var(--surface);">
+          <div class="audit-console">
+            <div class="audit-console-title">
+              <span>Security & Performance Audit</span>
+              <span id="audit-count" style="color: var(--fg-muted);">1 Issue Detected</span>
+            </div>
+            <div id="audit-output"></div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Right Panel: Hardened Invariant Reference -->
-    <div class="panel">
-      <div class="panel-header">
-        <span class="panel-title">🛡️ Hardened Production Invariant</span>
+      <!-- Right Panel: Hardened Invariant Reference -->
+      <div class="editor-card">
+        <div class="editor-header">
+          <div class="editor-file">
+            <div class="dots">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+            <span>api/document.hardened.ts</span>
+          </div>
+          <span class="tag-badge tag-success">secure-code Standard</span>
+        </div>
+
+        <textarea id="hardened-output" class="code-area" spellcheck="false" readonly></textarea>
+
+        <div class="card-footer">
+          <button class="btn-action-secondary" onclick="copyHardened()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Copy Hardened Code
+          </button>
+          <span style="font-size: 11px; color: var(--emerald); font-family: var(--font-mono);">? Invariants Verified</span>
+        </div>
+
+        <div style="padding: 16px; background: var(--surface);">
+          <div style="background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 14px;">
+            <div style="color: var(--fg-muted); font-size: 12px; margin-bottom: 6px;">Zero-Install Project Scanner:</div>
+            <code style="font-family: var(--font-mono); font-size: 12px; color: var(--fg);">npx github:carbonthecoder/secure-code audit</code>
+          </div>
+        </div>
       </div>
 
-      <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">
-        Standard code emitted under the <strong>secure-code</strong> standard:
-      </p>
+    </div>
 
-      <textarea id="hardened-output" class="code-box" readonly></textarea>
+    <!-- Invariant Comparison Matrix -->
+    <div class="matrix-wrapper">
+      <div class="matrix-header">
+        <div>
+          <div class="matrix-title">Production Invariant Matrix</div>
+          <div class="matrix-subtitle">Side-by-side comparison of typical AI hallucinations vs secure-code standards.</div>
+        </div>
+      </div>
 
-      <div style="margin-top: 16px; padding: 12px; background: #0d1117; border-radius: 8px; border: 1px solid #30363d;">
-        <div style="color: var(--primary); font-weight: 700; font-size: 13px; margin-bottom: 4px;">🚀 1-Command Terminal Quickstart:</div>
-        <code style="font-family: var(--font-mono); font-size: 12px; color: #9ca3af;">npx secure-code inject</code>
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Security Domain</th>
+            <th>Vanilla AI Anti-Pattern</th>
+            <th>secure-code Invariant</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Data Ownership (IDOR)</strong></td>
+            <td><span class="code-inline-danger">db.find({ id: req.params.id })</span></td>
+            <td><span class="code-inline-success">db.findFirst({ where: { id, tenantId, userId } })</span></td>
+          </tr>
+          <tr>
+            <td><strong>Token / HMAC Equality</strong></td>
+            <td><span class="code-inline-danger">if (signature === expectedSecret)</span></td>
+            <td><span class="code-inline-success">crypto.timingSafeEqual(sigBuf, expBuf)</span></td>
+          </tr>
+          <tr>
+            <td><strong>Financial Arithmetic</strong></td>
+            <td><span class="code-inline-danger">total += price * 0.0825</span></td>
+            <td><span class="code-inline-success">(cents * 825n + 5000n) / 10000n</span></td>
+          </tr>
+          <tr>
+            <td><strong>SQL Construction</strong></td>
+            <td><span class="code-inline-danger">db.query(`SELECT * WHERE id = ${id}`)</span></td>
+            <td><span class="code-inline-success">db.query('SELECT * WHERE id = $1', [id])</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- Vercel Footer -->
+  <footer>
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <div>
+        Created by <a href="https://github.com/carbonthecoder" target="_blank" style="font-weight: 600; color: #fff;">@carbonthecoder</a> � Open Source (MIT)
+      </div>
+      <div style="display: flex; gap: 20px;">
+        <a href="https://github.com/carbonthecoder/secure-code" target="_blank">GitHub</a>
+        <a href="https://github.com/carbonthecoder/secure-code/blob/main/SECURITY.md" target="_blank">Security Policy</a>
+        <a href="https://github.com/carbonthecoder/secure-code/blob/main/CONTRIBUTING.md" target="_blank">Contributing</a>
       </div>
     </div>
-  </div>
-
-  <div class="matrix-section">
-    <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 16px;">Top Security Invariants Quick Matrix</h2>
-    <table class="matrix-table">
-      <thead>
-        <tr>
-          <th>Category</th>
-          <th>Vulnerable AI Anti-Pattern</th>
-          <th>Hardened secure-code Standard</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Data Ownership</strong></td>
-          <td style="color: #fca5a5;"><code>db.find({ id: req.params.id })</code></td>
-          <td style="color: #a7f3d0;"><code>db.findFirst({ where: { id, tenantId, userId } })</code></td>
-        </tr>
-        <tr>
-          <td><strong>Token Compare</strong></td>
-          <td style="color: #fca5a5;"><code>if (signature === expectedSignature)</code></td>
-          <td style="color: #a7f3d0;"><code>crypto.timingSafeEqual(sigBuffer, expBuffer)</code></td>
-        </tr>
-        <tr>
-          <td><strong>Currency Math</strong></td>
-          <td style="color: #fca5a5;"><code>let tax = price * 0.0825</code></td>
-          <td style="color: #a7f3d0;"><code>(cents * 825n + 5000n) / 10000n</code></td>
-        </tr>
-        <tr>
-          <td><strong>SQL Queries</strong></td>
-          <td style="color: #fca5a5;"><code>db.query(`SELECT * WHERE id = ${id}`)</code></td>
-          <td style="color: #a7f3d0;"><code>db.query('SELECT * WHERE id = $1', [id])</code></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  </footer>
 
   <script>
     const SAMPLES = {
@@ -358,7 +837,7 @@ app.get("/api/documents/:id", requireAuth, async (req, res) => {
     };
 
     const HARDENED_TEMPLATES = {
-      idor: `// 🛡️ SECURE-CODE Hardened (Zero IDOR / Tenant-Scoped)
+      idor: `// ??? SECURE-CODE Hardened (Zero IDOR / Tenant-Scoped)
 app.get("/api/documents/:id", requireAuth, async (req, res) => {
   const doc = await db.document.findFirst({
     where: {
@@ -371,7 +850,7 @@ app.get("/api/documents/:id", requireAuth, async (req, res) => {
   res.json(doc);
 });`,
 
-      timing: `// 🛡️ SECURE-CODE Hardened (Constant-Time Verification)
+      timing: `// ??? SECURE-CODE Hardened (Constant-Time Verification)
 import crypto from "crypto";
 
 app.post("/webhook", (req, res) => {
@@ -388,7 +867,7 @@ app.post("/webhook", (req, res) => {
   res.send("OK");
 });`,
 
-      money: `// 🛡️ SECURE-CODE Hardened (Integer Cents & Banker's Rounding)
+      money: `// ??? SECURE-CODE Hardened (Integer Cents & Banker's Rounding)
 function calculateOrderTotal(items) {
   let subtotalCents = 0n;
   for (const item of items) {
@@ -399,7 +878,7 @@ function calculateOrderTotal(items) {
   return { subtotalCents, taxCents, totalCents: subtotalCents + taxCents };
 }`,
 
-      sqli: `// 🛡️ SECURE-CODE Hardened (Parameterized Query)
+      sqli: `// ??? SECURE-CODE Hardened (Parameterized Query)
 async function getUser(id, tenantId) {
   return await db.query(
     "SELECT * FROM users WHERE id = $1 AND tenant_id = $2",
@@ -407,21 +886,35 @@ async function getUser(id, tenantId) {
   );
 }`,
 
-      clean: `// 🛡️ SECURE-CODE: This snippet satisfies all production invariants.`
+      clean: `// ??? SECURE-CODE: This snippet satisfies all production invariants.`
     };
 
     let currentSample = "idor";
 
-    function loadSample(key) {
+    function loadSample(key, el) {
       currentSample = key;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      if (el) el.classList.add('active');
+
       document.getElementById("code-input").value = SAMPLES[key];
       document.getElementById("hardened-output").value = HARDENED_TEMPLATES[key];
+      
+      const leftTag = document.getElementById("left-tag");
+      if (key === 'clean') {
+        leftTag.textContent = "Clean Invariant";
+        leftTag.className = "tag-badge tag-success";
+      } else {
+        leftTag.textContent = "Vulnerable Pattern";
+        leftTag.className = "tag-badge tag-danger";
+      }
+
       runAudit();
     }
 
     function runAudit() {
       const code = document.getElementById("code-input").value;
       const output = document.getElementById("audit-output");
+      const countEl = document.getElementById("audit-count");
       output.innerHTML = "";
 
       const issues = [];
@@ -429,48 +922,60 @@ async function getUser(id, tenantId) {
       if (/findUnique\s*\(\s*\{\s*where:\s*\{\s*id\b/.test(code) && !/tenantId/.test(code)) {
         issues.push({
           type: "danger",
-          icon: "❌",
-          text: "IDOR Vulnerability: Fetching record by client ID alone without tenantId or userId scope."
+          icon: "?",
+          title: "IDOR Vulnerability",
+          desc: "Query fetched by ID alone without verifying tenantId or userId session ownership."
         });
       }
 
       if (/(token|apiKey|signature|secret)\s*===/i.test(code)) {
         issues.push({
           type: "danger",
-          icon: "❌",
-          text: "Timing Side-Channel: Using strict equality (===) to compare security tokens. Use crypto.timingSafeEqual()."
+          icon: "?",
+          title: "Timing Side-Channel",
+          desc: "Using standard strict equality (===) on secrets allows byte-by-byte timing attacks. Use crypto.timingSafeEqual()."
         });
       }
 
       if (/(SELECT|INSERT|UPDATE|DELETE).*\$\{.*\}/i.test(code)) {
         issues.push({
           type: "danger",
-          icon: "❌",
-          text: "SQL Injection Risk: Detected raw string interpolation in SQL query. Use parameterized placeholders."
+          icon: "?",
+          title: "SQL Injection Risk",
+          desc: "Raw string interpolation in SQL query. Enforce parameterized query variables ($1, ?)."
         });
       }
 
       if (/(price|amount|balance|total)\s*[:=]\s*(number|float|double)\b/i.test(code) || /\*\s*0\.\d+/.test(code)) {
         issues.push({
           type: "warning",
-          icon: "⚠️",
-          text: "Financial Drift Risk: Float math used for currency calculation. Use integer minor units (cents) or Decimal."
+          icon: "??",
+          title: "Financial Drift Risk",
+          desc: "Float arithmetic used for currency calculations. Store money in integer minor units (cents) with Banker's rounding."
         });
       }
 
+      countEl.textContent = issues.length === 0 ? "0 Issues Detected" : `${issues.length} Issue(s) Detected`;
+
       if (issues.length === 0) {
         output.innerHTML = `
-          <div class="audit-item audit-success">
-            <span>✅</span>
-            <span>Clean Audit: No obvious security or performance anti-patterns detected!</span>
+          <div class="audit-item audit-item-success">
+            <span>?</span>
+            <div>
+              <strong>All Invariants Satisfied</strong>
+              <div style="color: #6ee7b7; font-size: 11px; margin-top: 2px;">No unvalidated inputs, timing channels, or float money math detected.</div>
+            </div>
           </div>
         `;
       } else {
         issues.forEach(iss => {
           output.innerHTML += `
-            <div class="audit-item audit-${iss.type}">
+            <div class="audit-item audit-item-${iss.type}">
               <span>${iss.icon}</span>
-              <span>${iss.text}</span>
+              <div>
+                <strong>${iss.title}</strong>
+                <div style="font-size: 11px; margin-top: 2px; opacity: 0.9;">${iss.desc}</div>
+              </div>
             </div>
           `;
         });
@@ -480,8 +985,24 @@ async function getUser(id, tenantId) {
     function hardenCode() {
       if (HARDENED_TEMPLATES[currentSample]) {
         document.getElementById("code-input").value = HARDENED_TEMPLATES[currentSample];
+        const leftTag = document.getElementById("left-tag");
+        leftTag.textContent = "Auto-Hardened";
+        leftTag.className = "tag-badge tag-success";
         runAudit();
       }
+    }
+
+    function copyCommand(cmd) {
+      navigator.clipboard.writeText(cmd).then(() => {
+        const text = document.getElementById("copy-btn-text");
+        text.textContent = "Copied!";
+        setTimeout(() => { text.textContent = "Copy"; }, 2000);
+      });
+    }
+
+    function copyHardened() {
+      const val = document.getElementById("hardened-output").value;
+      navigator.clipboard.writeText(val);
     }
 
     // Initialize with IDOR sample
