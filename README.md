@@ -1,4 +1,6 @@
-﻿<div align="center">
+<div align="center">
+
+![secure-code Banner](docs/assets/social-preview.jpg)
 
 # secure-code
 
