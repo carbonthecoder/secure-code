@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -9,23 +9,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #000000;
-      --surface: #0a0a0a;
-      --surface-elevated: #121212;
-      --surface-hover: #181818;
-      --border: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(255, 255, 255, 0.2);
-      --fg: #ededed;
-      --fg-muted: #888888;
-      --fg-subtle: #555555;
-      --emerald: #00dc82;
-      --emerald-subtle: rgba(0, 220, 130, 0.08);
-      --emerald-border: rgba(0, 220, 130, 0.25);
-      --danger: #ff453a;
-      --danger-subtle: rgba(255, 69, 58, 0.08);
-      --danger-border: rgba(255, 69, 58, 0.25);
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface-elevated: #f4f4f5;
+      --surface-hover: #e4e4e7;
+      --border: #e4e4e7;
+      --border-hover: #d4d4d8;
+      --fg: #09090b;
+      --fg-muted: #71717a;
+      --fg-subtle: #a1a1aa;
+      --emerald: #059669;
+      --emerald-subtle: #ecfdf5;
+      --emerald-border: #a7f3d0;
+      --danger: #dc2626;
+      --danger-subtle: #fef2f2;
+      --danger-border: #fecaca;
       --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,35 +43,34 @@
       position: relative;
     }
 
-    /* Subtle ambient lighting */
+    /* Ambient Subtle Lighting */
     body::before {
       content: "";
       position: fixed;
       top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 900px;
-      height: 380px;
-      background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+      left: 0;
+      right: 0;
+      height: 400px;
+      background: radial-gradient(circle at 50% 0%, rgba(24, 24, 27, 0.04) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
 
-    /* Navigation */
+    /* Sticky Navigation */
     nav {
       position: sticky;
       top: 0;
       z-index: 50;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(255, 255, 255, 0.88);
       border-bottom: 1px solid var(--border);
     }
 
     .nav-inner {
-      max-width: 1160px;
+      max-width: 1180px;
       margin: 0 auto;
-      height: 60px;
+      height: 64px;
       padding: 0 24px;
       display: flex;
       align-items: center;
@@ -80,26 +82,31 @@
       align-items: center;
       gap: 10px;
       text-decoration: none;
-      color: #fff;
+      color: var(--fg);
     }
 
     .brand-logo {
-      width: 24px;
-      height: 24px;
-      background: #ffffff;
-      border-radius: 4px;
+      width: 28px;
+      height: 28px;
+      background: #18181b;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #000;
+      color: #fff;
       font-weight: 800;
-      font-size: 13px;
+      font-size: 14px;
+      transition: transform 0.2s ease;
+    }
+
+    .brand:hover .brand-logo {
+      transform: rotate(-8deg) scale(1.05);
     }
 
     .brand-name {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
     }
 
     .brand-badge {
@@ -107,20 +114,22 @@
       color: var(--fg-muted);
       background: var(--surface-elevated);
       border: 1px solid var(--border);
-      padding: 1px 6px;
-      border-radius: 4px;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-weight: 600;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 20px;
     }
 
     .nav-link {
       color: var(--fg-muted);
       text-decoration: none;
       font-size: 14px;
+      font-weight: 500;
       transition: color 0.15s ease;
     }
 
@@ -130,27 +139,29 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: var(--fg);
-      color: #000;
-      padding: 6px 14px;
+      background: #18181b;
+      color: #fff;
+      padding: 7px 16px;
       border-radius: 9999px;
       font-size: 13px;
       font-weight: 600;
       text-decoration: none;
-      transition: all 0.15s ease;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
     }
 
     .btn-github:hover {
-      background: #ffffff;
-      box-shadow: 0 0 16px rgba(255, 255, 255, 0.2);
+      background: #000;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
     }
 
     /* Hero */
     .hero {
       position: relative;
       z-index: 1;
-      max-width: 800px;
-      margin: 56px auto 40px auto;
+      max-width: 840px;
+      margin: 64px auto 44px auto;
       text-align: center;
       padding: 0 24px;
     }
@@ -161,36 +172,37 @@
       gap: 8px;
       background: var(--surface);
       border: 1px solid var(--border);
-      padding: 4px 14px;
+      padding: 6px 18px;
       border-radius: 9999px;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--fg-muted);
-      margin-bottom: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fg);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
     }
 
     .pill-dot {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       background: var(--emerald);
       border-radius: 50%;
     }
 
     h1.hero-title {
-      font-size: clamp(30px, 4.5vw, 50px);
+      font-size: clamp(34px, 5vw, 56px);
       font-weight: 800;
-      letter-spacing: -0.035em;
-      line-height: 1.15;
-      color: #ffffff;
-      margin-bottom: 16px;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      color: #09090b;
+      margin-bottom: 18px;
     }
 
     p.hero-subtitle {
-      font-size: clamp(15px, 1.8vw, 18px);
+      font-size: clamp(16px, 2vw, 19px);
       color: var(--fg-muted);
       line-height: 1.6;
-      max-width: 640px;
-      margin: 0 auto 28px auto;
+      max-width: 660px;
+      margin: 0 auto 32px auto;
     }
 
     /* Command Bar */
@@ -199,18 +211,23 @@
       align-items: center;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 6px 6px 6px 14px;
-      gap: 12px;
-      transition: border-color 0.15s ease;
+      border-radius: 10px;
+      padding: 6px 6px 6px 16px;
+      gap: 14px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
     }
 
-    .cli-bar:hover { border-color: var(--border-hover); }
+    .cli-bar:hover {
+      border-color: var(--border-hover);
+      box-shadow: var(--shadow-md);
+    }
 
     .cli-text {
       font-family: var(--font-mono);
       font-size: 13px;
-      color: var(--fg);
+      color: #09090b;
+      font-weight: 500;
     }
 
     .cli-prompt {
@@ -220,13 +237,13 @@
     }
 
     .btn-copy {
-      background: var(--surface-elevated);
-      color: var(--fg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 5px 12px;
+      background: #18181b;
+      color: #ffffff;
+      border: none;
+      border-radius: 7px;
+      padding: 6px 14px;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -235,105 +252,136 @@
     }
 
     .btn-copy:hover {
-      background: var(--surface-hover);
-      border-color: var(--border-hover);
+      background: #27272a;
     }
 
     /* Main Container */
     .main-wrapper {
       position: relative;
       z-index: 1;
-      max-width: 1160px;
-      margin: 0 auto 80px auto;
+      max-width: 1180px;
+      margin: 0 auto 90px auto;
       padding: 0 24px;
     }
 
-    /* Real-Life Tabs */
+    /* Tabs Bar */
     .tabs-bar {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      margin-bottom: 16px;
+      gap: 10px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
     }
 
     .tab-btn {
-      background: transparent;
+      background: var(--surface);
       color: var(--fg-muted);
-      border: 1px solid transparent;
-      padding: 8px 14px;
-      border-radius: 8px;
+      border: 1px solid var(--border);
+      padding: 9px 16px;
+      border-radius: 10px;
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.15s ease;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab-btn svg {
+      transition: transform 0.2s ease;
     }
 
     .tab-btn:hover {
       color: var(--fg);
-      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .tab-btn:hover svg {
+      transform: scale(1.15);
     }
 
     .tab-btn.active {
-      color: #fff;
-      background: var(--surface-elevated);
-      border-color: var(--border);
+      color: #ffffff;
+      background: #18181b;
+      border-color: #18181b;
+      box-shadow: var(--shadow-md);
     }
 
-    /* Story Explanation Banner */
+    .tab-btn.active svg {
+      stroke: #ffffff;
+    }
+
+    /* Story Card */
     .story-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 18px;
-      margin-bottom: 20px;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+      gap: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .story-icon-box {
+      width: 36px;
+      height: 36px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
     .story-text {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--fg-muted);
       line-height: 1.5;
     }
 
     .story-highlight {
-      color: #fff;
-      font-weight: 600;
+      color: #09090b;
+      font-weight: 700;
     }
 
     /* Studio Grid */
     .studio-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 24px;
     }
 
-    @media (max-width: 880px) {
+    @media (max-width: 900px) {
       .studio-grid { grid-template-columns: 1fr; }
     }
 
     .editor-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: border-color 0.15s ease;
+      box-shadow: var(--shadow-md);
+      transition: all 0.2s ease;
     }
 
-    .editor-card:hover { border-color: var(--border-hover); }
+    .editor-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
 
     .editor-header {
       background: var(--surface-elevated);
-      padding: 12px 16px;
+      padding: 12px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -342,7 +390,7 @@
 
     .editor-title {
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--fg);
       display: flex;
       align-items: center;
@@ -351,30 +399,48 @@
 
     .tag-badge {
       font-size: 11px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 4px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.02em;
     }
 
-    .tag-danger { background: var(--danger-subtle); color: var(--danger); border: 1px solid var(--danger-border); }
-    .tag-success { background: var(--emerald-subtle); color: var(--emerald); border: 1px solid var(--emerald-border); }
+    .tag-danger {
+      background: var(--danger-subtle);
+      color: var(--danger);
+      border: 1px solid var(--danger-border);
+    }
+
+    .tag-success {
+      background: var(--emerald-subtle);
+      color: var(--emerald);
+      border: 1px solid var(--emerald-border);
+    }
+
+    /* Dark Code Terminal Inside White Card */
+    .terminal-container {
+      background: #09090b;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
 
     textarea.code-area {
       width: 100%;
-      height: 250px;
-      background: #000000;
-      color: #e6edf3;
+      height: 240px;
+      background: transparent;
+      color: #f4f4f5;
       border: none;
-      padding: 16px;
       font-family: var(--font-mono);
       font-size: 13px;
       line-height: 1.6;
       resize: vertical;
       outline: none;
+      tab-size: 2;
     }
 
     .card-footer {
-      padding: 12px 16px;
+      padding: 14px 18px;
       background: var(--surface);
       border-top: 1px solid var(--border);
       display: flex;
@@ -385,99 +451,107 @@
     }
 
     .btn-action-primary {
-      background: #ffffff;
-      color: #000000;
+      background: #18181b;
+      color: #ffffff;
       border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
+      padding: 9px 18px;
+      border-radius: 8px;
       font-weight: 600;
-      font-size: 13px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: background 0.15s ease;
-    }
-
-    .btn-action-primary:hover { background: #e5e5e5; }
-
-    .btn-action-secondary {
-      background: var(--surface-elevated);
-      color: var(--fg);
-      border: 1px solid var(--border);
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-weight: 500;
       font-size: 13px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       transition: all 0.15s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-action-primary:hover {
+      background: #000000;
+      transform: translateY(-1px);
+    }
+
+    .btn-action-secondary {
+      background: var(--surface);
+      color: var(--fg);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      box-shadow: var(--shadow-sm);
     }
 
     .btn-action-secondary:hover {
-      background: var(--surface-hover);
+      background: var(--surface-elevated);
       border-color: var(--border-hover);
+      transform: translateY(-1px);
     }
 
-    /* Console Explanations */
+    /* Explanation Console */
     .audit-console {
       margin-top: 14px;
-      background: #000000;
+      background: var(--surface-elevated);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 14px;
-      min-height: 70px;
+      min-height: 80px;
     }
 
     .audit-console-title {
       font-size: 11px;
-      font-weight: 600;
-      color: var(--fg-subtle);
+      font-weight: 700;
+      color: var(--fg-muted);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       margin-bottom: 8px;
     }
 
     .audit-item {
-      padding: 10px 12px;
-      border-radius: 6px;
+      padding: 10px 14px;
+      border-radius: 8px;
       font-size: 13px;
       line-height: 1.5;
     }
 
     .audit-item-danger {
       background: var(--danger-subtle);
-      color: #ff9f97;
+      color: #b91c1c;
       border: 1px solid var(--danger-border);
     }
 
     .audit-item-success {
       background: var(--emerald-subtle);
-      color: #88ffcc;
+      color: #047857;
       border: 1px solid var(--emerald-border);
     }
 
     /* Comparison Table */
     .matrix-wrapper {
-      margin-top: 56px;
+      margin-top: 64px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       overflow: hidden;
+      box-shadow: var(--shadow-md);
     }
 
     .matrix-header {
-      padding: 18px 24px;
+      padding: 20px 24px;
       border-bottom: 1px solid var(--border);
     }
 
     .matrix-title {
-      font-size: 17px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 800;
       letter-spacing: -0.02em;
       margin-bottom: 4px;
+      color: #09090b;
     }
 
     .matrix-subtitle {
@@ -494,55 +568,58 @@
     table.matrix-table th {
       background: var(--surface-elevated);
       color: var(--fg-muted);
-      font-size: 11px;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      padding: 12px 20px;
+      padding: 12px 24px;
       border-bottom: 1px solid var(--border);
     }
 
     table.matrix-table td {
-      padding: 14px 20px;
+      padding: 16px 24px;
       border-bottom: 1px solid var(--border);
       font-size: 13px;
       vertical-align: middle;
     }
 
     table.matrix-table tr:last-child td { border-bottom: none; }
-    table.matrix-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+    table.matrix-table tr:hover td { background: var(--surface-elevated); }
 
     .code-tag-danger {
       font-family: var(--font-mono);
       font-size: 12px;
-      color: #ff9f97;
-      background: rgba(255, 69, 58, 0.08);
-      padding: 3px 6px;
-      border-radius: 4px;
-      border: 1px solid rgba(255, 69, 58, 0.2);
+      color: #b91c1c;
+      background: var(--danger-subtle);
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--danger-border);
+      font-weight: 600;
     }
 
     .code-tag-success {
       font-family: var(--font-mono);
       font-size: 12px;
-      color: #88ffcc;
-      background: rgba(0, 220, 130, 0.08);
-      padding: 3px 6px;
-      border-radius: 4px;
-      border: 1px solid rgba(0, 220, 130, 0.2);
+      color: #047857;
+      background: var(--emerald-subtle);
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--emerald-border);
+      font-weight: 600;
     }
 
     /* Footer */
     footer {
       border-top: 1px solid var(--border);
-      padding: 32px 24px;
+      padding: 36px 24px;
       text-align: center;
       color: var(--fg-muted);
       font-size: 13px;
-      margin-top: 64px;
+      margin-top: 72px;
+      background: #ffffff;
     }
 
-    footer a { color: var(--fg); text-decoration: none; }
+    footer a { color: var(--fg); font-weight: 500; text-decoration: none; }
     footer a:hover { text-decoration: underline; }
   </style>
 </head>
@@ -592,17 +669,35 @@
   <!-- Interactive Studio -->
   <main class="main-wrapper" id="playground">
     
-    <!-- Real-Life Danger Tabs -->
+    <!-- Real-Life Danger Tabs with SVG Icons -->
     <div class="tabs-bar">
-      <button class="tab-btn active" onclick="loadSample('idor', this)">🚪 Unlocked Doors</button>
-      <button class="tab-btn" onclick="loadSample('money', this)">💰 Ghost Pennies</button>
-      <button class="tab-btn" onclick="loadSample('sqli', this)">💣 Search Box Pranks</button>
-      <button class="tab-btn" onclick="loadSample('timing', this)">⏱️ Stopwatch Cracking</button>
-      <button class="tab-btn" onclick="loadSample('clean', this)">✅ Safe & Sound</button>
+      <button class="tab-btn active" onclick="loadSample('idor', this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M19 21v-4a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v4M9 3h6a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>
+        Unlocked Doors
+      </button>
+      <button class="tab-btn" onclick="loadSample('money', this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><line x1="12" y1="8" x2="12" y2="16"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-1.5 2-2.5 2.5s-2.5 1-2.5 2.5a2.5 2.5 0 0 0 5 0"/></svg>
+        Ghost Pennies
+      </button>
+      <button class="tab-btn" onclick="loadSample('sqli', this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        Search Box Pranks
+      </button>
+      <button class="tab-btn" onclick="loadSample('timing', this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="14" r="8"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="10" x2="12" y2="14"/><line x1="12" y1="14" x2="15" y2="17"/></svg>
+        Stopwatch Cracking
+      </button>
+      <button class="tab-btn" onclick="loadSample('clean', this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        Safe & Sound
+      </button>
     </div>
 
     <!-- Plain-English Story Card -->
     <div class="story-card">
+      <div class="story-icon-box" id="story-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#18181b" stroke-width="2"><path d="M3 21h18M19 21v-4a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v4M9 3h6a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>
+      </div>
       <div class="story-text" id="story-content">
         <span class="story-highlight">The "Unlocked Hotel Room":</span> Imagine key #101 accidentally opening room #102. When AI writes code to fetch a file, it searches by the number in the link alone. Anyone can change the number in their browser to view someone else's private files!
       </div>
@@ -620,7 +715,9 @@
           <span class="tag-badge tag-danger" id="left-tag">Dangerous Mistake</span>
         </div>
 
-        <textarea id="code-input" class="code-area" spellcheck="false" oninput="runAudit()"></textarea>
+        <div class="terminal-container">
+          <textarea id="code-input" class="code-area" spellcheck="false" oninput="runAudit()"></textarea>
+        </div>
 
         <div class="card-footer">
           <div style="display: flex; gap: 8px;">
@@ -631,10 +728,10 @@
               Fix It For Me (1 Click)
             </button>
           </div>
-          <span style="font-size: 11px; color: var(--fg-subtle); font-family: var(--font-mono);">Live Checker</span>
+          <span style="font-size: 12px; color: var(--fg-muted); font-weight: 500;">Live Scanner</span>
         </div>
 
-        <div style="padding: 14px 16px; background: var(--surface);">
+        <div style="padding: 14px 18px; background: var(--surface);">
           <div class="audit-console">
             <div class="audit-console-title">What is wrong with this code?</div>
             <div id="audit-output"></div>
@@ -651,20 +748,22 @@
           <span class="tag-badge tag-success">Safe Production Code</span>
         </div>
 
-        <textarea id="hardened-output" class="code-area" spellcheck="false" readonly></textarea>
+        <div class="terminal-container">
+          <textarea id="hardened-output" class="code-area" spellcheck="false" readonly></textarea>
+        </div>
 
         <div class="card-footer">
           <button class="btn-action-secondary" onclick="copyHardened()">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             <span id="copy-safe-btn">Copy Safe Code</span>
           </button>
-          <span style="font-size: 11px; color: var(--emerald); font-family: var(--font-mono);">Checked & Verified</span>
+          <span style="font-size: 12px; color: var(--emerald); font-weight: 600;">● Checked & Verified</span>
         </div>
 
-        <div style="padding: 14px 16px; background: var(--surface);">
-          <div style="background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px;">
-            <div style="color: var(--fg-muted); font-size: 12px; margin-bottom: 4px;">Want to check your existing project for these bugs? Run:</div>
-            <code style="font-family: var(--font-mono); font-size: 12px; color: var(--fg);">npx github:carbonthecoder/secure-code audit</code>
+        <div style="padding: 14px 18px; background: var(--surface);">
+          <div style="background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px;">
+            <div style="color: var(--fg-muted); font-size: 12px; margin-bottom: 4px;">Want to scan your existing project for these bugs? Run:</div>
+            <code style="font-family: var(--font-mono); font-size: 12px; color: #09090b; font-weight: 600;">npx github:carbonthecoder/secure-code audit</code>
           </div>
         </div>
       </div>
@@ -727,7 +826,7 @@
 
   <!-- Clean Footer -->
   <footer>
-    <div style="max-width: 1160px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+    <div style="max-width: 1180px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
       <div>
         Made for developers building with AI • Free & Open Source (MIT)
       </div>
@@ -740,126 +839,48 @@
   </footer>
 
   <script>
-    const STORIES = {
-      idor: '<span class="story-highlight">The "Unlocked Hotel Room":</span> Imagine key #101 opening room #102! AI writes code to fetch a file using only the ID number. Anyone can change the number in the link to view someone else\\'s private files.',
+    var STORIES = {
+      idor: '<span class="story-highlight">The "Unlocked Hotel Room":</span> Imagine key #101 accidentally opening room #102. When AI writes code to fetch a file, it searches by the number in the link alone. Anyone can change the number in their browser to view someone else\'s private files!',
       money: '<span class="story-highlight">The "Ghost Pennies":</span> Computers struggle with decimals (0.1 + 0.2 equals 0.30000000000000004). AI calculates prices with decimals, quietly corrupting account balances over time.',
       sqli: '<span class="story-highlight">The "Search Box Prank":</span> A prankster types evil commands into a search box. AI pastes that text directly into the database command, wiping out your entire customer list!',
       timing: '<span class="story-highlight">The "Stopwatch Password Guess":</span> When checking passwords with ===, the computer stops immediately on the first wrong letter. Hackers measure milliseconds to guess every letter one-by-one.',
       clean: '<span class="story-highlight">Safe & Sound:</span> This is how code should look: checking user ownership, counting money in whole pennies, and keeping secret keys locked down.'
     };
 
-    const SAMPLES = {
-      idor: `// ❌ Unsafe: Hands this file to ANYONE who asks for this ID number!
-app.get("/api/documents/:id", async (req, res) => {
-  const doc = await db.document.findUnique({
-    where: { id: req.params.id }
-  });
-  res.json(doc);
-});`,
-
-      money: `// ❌ Unsafe: Decimals drift in computers (0.1 + 0.2 !== 0.3)
-function calculateOrderTotal(items) {
-  let total = 0;
-  for (const item of items) {
-    total += item.price * item.quantity;
-  }
-  const tax = total * 0.0825;
-  return total + tax;
-}`,
-
-      sqli: `// ❌ Unsafe: Pasting user text into database commands allows hackers to wipe tables!
-async function getUser(id) {
-  return await db.query(\`SELECT * FROM users WHERE id = '\${id}'\`);
-}`,
-
-      timing: `// ❌ Unsafe: Quitting on the first wrong character lets hackers guess the secret!
-app.post("/webhook", (req, res) => {
-  const signature = req.headers["x-signature"];
-  if (signature === EXPECTED_SECRET) {
-    return res.send("OK");
-  }
-  res.status(401).send("Invalid");
-});`,
-
-      clean: `// ✅ Safe: Only shows the file if the logged-in user actually owns it!
-app.get("/api/documents/:id", requireAuth, async (req, res) => {
-  const doc = await db.document.findFirst({
-    where: {
-      id: req.params.id,
-      userId: req.session.userId // Checked!
-    }
-  });
-  if (!doc) return res.status(404).json({ error: "Document not found" });
-  res.json(doc);
-});`
+    var SAMPLES = {
+      idor: '// ❌ Unsafe: Hands this file to ANYONE who asks for this ID number!\napp.get("/api/documents/:id", async (req, res) => {\n  const doc = await db.document.findUnique({\n    where: { id: req.params.id }\n  });\n  res.json(doc);\n});',
+      money: '// ❌ Unsafe: Decimals drift in computers (0.1 + 0.2 !== 0.3)\nfunction calculateOrderTotal(items) {\n  let total = 0;\n  for (const item of items) {\n    total += item.price * item.quantity;\n  }\n  const tax = total * 0.0825;\n  return total + tax;\n}',
+      sqli: '// ❌ Unsafe: Pasting user text into database commands allows hackers to wipe tables!\nasync function getUser(id) {\n  return await db.query(`SELECT * FROM users WHERE id = \'${id}\'`);\n}',
+      timing: '// ❌ Unsafe: Quitting on the first wrong character lets hackers guess the secret!\napp.post("/webhook", (req, res) => {\n  const signature = req.headers["x-signature"];\n  if (signature === EXPECTED_SECRET) {\n    return res.send("OK");\n  }\n  res.status(401).send("Invalid");\n});',
+      clean: '// ✅ Safe: Only shows the file if the logged-in user actually owns it!\napp.get("/api/documents/:id", requireAuth, async (req, res) => {\n  const doc = await db.document.findFirst({\n    where: {\n      id: req.params.id,\n      userId: req.session.userId // Checked!\n    }\n  });\n  if (!doc) return res.status(404).json({ error: "Document not found" });\n  res.json(doc);\n});'
     };
 
-    const HARDENED_TEMPLATES = {
-      idor: `// ✅ Safe: Strictly checks that the logged-in user owns this document!
-app.get("/api/documents/:id", requireAuth, async (req, res) => {
-  const doc = await db.document.findFirst({
-    where: {
-      id: req.params.id,
-      userId: req.session.userId // Only returns if the user owns it!
-    }
-  });
-  if (!doc) return res.status(404).json({ error: "Document not found" });
-  res.json(doc);
-});`,
-
-      money: `// ✅ Safe: Always calculate money in whole pennies (cents), never decimals!
-function calculateOrderTotal(items) {
-  let subtotalPennies = 0n;
-  for (const item of items) {
-    subtotalPennies += item.priceInPennies * BigInt(item.quantity);
-  }
-  // 8.25% tax calculated in pennies with zero decimal rounding errors
-  const taxPennies = (subtotalPennies * 825n + 5000n) / 10000n;
-  return { subtotalPennies, taxPennies, totalPennies: subtotalPennies + taxPennies };
-}`,
-
-      sqli: `// ✅ Safe: Parameterized query ($1) tells database: 'Treat as text, never code!'
-async function getUser(id, tenantId) {
-  return await db.query(
-    "SELECT * FROM users WHERE id = $1 AND tenant_id = $2",
-    [id, tenantId]
-  );
-}`,
-
-      timing: `// ✅ Safe: Takes the exact same time no matter what, giving hackers 0 clues!
-import crypto from "crypto";
-
-app.post("/webhook", (req, res) => {
-  const signature = req.headers["x-signature"];
-  if (typeof signature !== "string") return res.status(400).send("Bad request");
-
-  const sigBuffer = Buffer.from(signature, "utf8");
-  const expBuffer = Buffer.from(EXPECTED_SECRET, "utf8");
-
-  // Constant-time check: leaves zero timing clues for hackers!
-  if (sigBuffer.length !== expBuffer.length || !crypto.timingSafeEqual(sigBuffer, expBuffer)) {
-    return res.status(401).send("Invalid signature");
-  }
-
-  res.send("OK");
-});`,
-
-      clean: `// ✅ Safe: This code follows all safety rules. No leaks, no hacks.`
+    var HARDENED_TEMPLATES = {
+      idor: '// ✅ Safe: Strictly checks that the logged-in user owns this document!\napp.get("/api/documents/:id", requireAuth, async (req, res) => {\n  const doc = await db.document.findFirst({\n    where: {\n      id: req.params.id,\n      userId: req.session.userId // Only returns if the user owns it!\n    }\n  });\n  if (!doc) return res.status(404).json({ error: "Document not found" });\n  res.json(doc);\n});',
+      money: '// ✅ Safe: Always calculate money in whole pennies (cents), never decimals!\nfunction calculateOrderTotal(items) {\n  let subtotalPennies = 0n;\n  for (const item of items) {\n    subtotalPennies += item.priceInPennies * BigInt(item.quantity);\n  }\n  // 8.25% tax calculated in pennies with zero decimal rounding errors\n  const taxPennies = (subtotalPennies * 825n + 5000n) / 10000n;\n  return { subtotalPennies, taxPennies, totalPennies: subtotalPennies + taxPennies };\n}',
+      sqli: '// ✅ Safe: Parameterized query ($1) tells database: \'Treat as text, never code!\'\nasync function getUser(id, tenantId) {\n  return await db.query(\n    "SELECT * FROM users WHERE id = $1 AND tenant_id = $2",\n    [id, tenantId]\n  );\n}',
+      timing: '// ✅ Safe: Takes the exact same time no matter what, giving hackers 0 clues!\nimport crypto from "crypto";\n\napp.post("/webhook", (req, res) => {\n  const signature = req.headers["x-signature"];\n  if (typeof signature !== "string") return res.status(400).send("Bad request");\n\n  const sigBuffer = Buffer.from(signature, "utf8");\n  const expBuffer = Buffer.from(EXPECTED_SECRET, "utf8");\n\n  // Constant-time check: leaves zero timing clues for hackers!\n  if (sigBuffer.length !== expBuffer.length || !crypto.timingSafeEqual(sigBuffer, expBuffer)) {\n    return res.status(401).send("Invalid signature");\n  }\n\n  res.send("OK");\n});',
+      clean: '// ✅ Safe: This code follows all safety rules. No leaks, no hacks.'
     };
 
-    let currentSample = "idor";
+    var currentSample = "idor";
 
     function loadSample(key, el) {
       currentSample = key;
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      if (el) el.classList.add('active');
+      var buttons = document.querySelectorAll(".tab-btn");
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("active");
+      }
+      if (el) {
+        el.classList.add("active");
+      }
 
       document.getElementById("story-content").innerHTML = STORIES[key];
       document.getElementById("code-input").value = SAMPLES[key];
       document.getElementById("hardened-output").value = HARDENED_TEMPLATES[key];
       
-      const leftTag = document.getElementById("left-tag");
-      if (key === 'clean') {
+      var leftTag = document.getElementById("left-tag");
+      if (key === "clean") {
         leftTag.textContent = "Safe Code";
         leftTag.className = "tag-badge tag-success";
       } else {
@@ -871,16 +892,16 @@ app.post("/webhook", (req, res) => {
     }
 
     function runAudit() {
-      const code = document.getElementById("code-input").value;
-      const output = document.getElementById("audit-output");
+      var code = document.getElementById("code-input").value;
+      var output = document.getElementById("audit-output");
       output.innerHTML = "";
 
-      const issues = [];
+      var issues = [];
 
       if (/findUnique\s*\(\s*\{\s*where:\s*\{\s*id\b/.test(code) && !/tenantId|userId|ownerId/.test(code)) {
         issues.push({
           type: "danger",
-          title: "🚪 Danger: Stranger can view someone else's files!",
+          title: "Danger: Stranger can view someone else's files!",
           desc: "This code fetches a file using only the ID number. Anyone can change the number in their web browser and read private data. Always check who is logged in (userId)!"
         });
       }
@@ -888,15 +909,15 @@ app.post("/webhook", (req, res) => {
       if (/(token|apiKey|signature|secret)\s*===/i.test(code)) {
         issues.push({
           type: "danger",
-          title: "⏱️ Danger: Hackers can guess your secret key!",
+          title: "Danger: Hackers can guess your secret key!",
           desc: "Using '===' to check passwords stops on the first wrong letter. Hackers can measure server response time in milliseconds to guess the password letter-by-letter."
         });
       }
 
-      if (/(SELECT|INSERT|UPDATE|DELETE).*\$\{.*\}/i.test(code)) {
+      if (/(SELECT|INSERT|UPDATE|DELETE).*\$\{.*\}/i.test(code) || /db\.query\(.*id\s*=/i.test(code)) {
         issues.push({
           type: "danger",
-          title: "💣 Danger: Prankster can delete your database!",
+          title: "Danger: Prankster can delete your database!",
           desc: "Pasting user text directly inside SQL code allows attackers to type special commands that dump or delete your entire database. Use parameterized variables ($1, ?)."
         });
       }
@@ -904,34 +925,25 @@ app.post("/webhook", (req, res) => {
       if (/(price|amount|balance|total)\s*[:=]\s*(number|float|double)\b/i.test(code) || /\*\s*0\.\d+/.test(code)) {
         issues.push({
           type: "danger",
-          title: "💰 Danger: Money balances will quietly be wrong!",
+          title: "Danger: Money balances will quietly be wrong!",
           desc: "Computers get confused doing math with decimals (0.1 + 0.2 is not 0.3). Customer balances will quietly drift over time. Always calculate money in whole pennies."
         });
       }
 
       if (issues.length === 0) {
-        output.innerHTML = `
-          <div class="audit-item audit-item-success">
-            <strong>✅ Looks Great! No Obvious Traps Found.</strong>
-            <div style="font-size: 12px; margin-top: 2px;">This code checks user ownership, keeps secrets safe, and avoids basic AI pitfalls.</div>
-          </div>
-        `;
+        output.innerHTML = '<div class="audit-item audit-item-success"><strong>Looks Great! No Obvious Traps Found.</strong><div style="font-size: 12px; margin-top: 2px;">This code checks user ownership, keeps secrets safe, and avoids basic AI pitfalls.</div></div>';
       } else {
-        issues.forEach(iss => {
-          output.innerHTML += `
-            <div class="audit-item audit-item-${iss.type}">
-              <strong>${iss.title}</strong>
-              <div style="font-size: 12px; margin-top: 2px;">${iss.desc}</div>
-            </div>
-          `;
-        });
+        for (var j = 0; j < issues.length; j++) {
+          var iss = issues[j];
+          output.innerHTML += '<div class="audit-item audit-item-' + iss.type + '"><strong>' + iss.title + '</strong><div style="font-size: 12px; margin-top: 2px;">' + iss.desc + '</div></div>';
+        }
       }
     }
 
     function hardenCode() {
       if (HARDENED_TEMPLATES[currentSample]) {
         document.getElementById("code-input").value = HARDENED_TEMPLATES[currentSample];
-        const leftTag = document.getElementById("left-tag");
+        var leftTag = document.getElementById("left-tag");
         leftTag.textContent = "Safe Code";
         leftTag.className = "tag-badge tag-success";
         runAudit();
@@ -939,24 +951,30 @@ app.post("/webhook", (req, res) => {
     }
 
     function copyCommand(cmd) {
-      navigator.clipboard.writeText(cmd).then(() => {
-        const text = document.getElementById("copy-btn-text");
+      navigator.clipboard.writeText(cmd).then(function() {
+        var text = document.getElementById("copy-btn-text");
         text.textContent = "Copied!";
-        setTimeout(() => { text.textContent = "Copy"; }, 2000);
+        setTimeout(function() { text.textContent = "Copy"; }, 2000);
       });
     }
 
     function copyHardened() {
-      const val = document.getElementById("hardened-output").value;
-      navigator.clipboard.writeText(val).then(() => {
-        const btn = document.getElementById("copy-safe-btn");
+      var val = document.getElementById("hardened-output").value;
+      navigator.clipboard.writeText(val).then(function() {
+        var btn = document.getElementById("copy-safe-btn");
         btn.textContent = "Copied!";
-        setTimeout(() => { btn.textContent = "Copy Safe Code"; }, 2000);
+        setTimeout(function() { btn.textContent = "Copy Safe Code"; }, 2000);
       });
     }
 
-    // Initialize with IDOR sample
-    loadSample('idor');
+    // Initialize immediately
+    window.addEventListener("DOMContentLoaded", function() {
+      loadSample("idor");
+    });
+    // Fallback if DOM already loaded
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+      loadSample("idor");
+    }
   </script>
 </body>
 </html>
