@@ -1,19 +1,19 @@
-<div align="center">
+﻿<div align="center">
 
 # secure-code
 
 ### The safety seatbelt for AI coding assistants.
 
-Stop Cursor, Claude Code, and Copilot from quietly introducing user data leaks, broken money math, and hackable database queries.
+**Stop Cursor, Claude, and Copilot from quietly creating security holes and broken code.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg?style=flat-square)](LICENSE)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Interactive_Playground-00dc82.svg?style=flat-square)](https://carbonthecoder.github.io/secure-code/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.svg?style=flat-square)](CONTRIBUTING.md)
 
 <p align="center">
-  <a href="https://carbonthecoder.github.io/secure-code/"><b>Try Interactive Demo</b></a> �
-  <a href="CHEATSHEET.md"><b>1-Page Cheatsheet</b></a> �
-  <a href="SECURITY.md"><b>Security Policy</b></a> �
+  <a href="https://carbonthecoder.github.io/secure-code/"><b>Try the Interactive Web Demo</b></a> •
+  <a href="CHEATSHEET.md"><b>1-Page Cheatsheet</b></a> •
+  <a href="SECURITY.md"><b>Security Policy</b></a> •
   <a href="CONTRIBUTING.md"><b>Contributing</b></a>
 </p>
 
@@ -21,116 +21,150 @@ Stop Cursor, Claude Code, and Copilot from quietly introducing user data leaks, 
 
 ---
 
-## ? Quickstart (Zero Install)
+## What is this? (In 15 seconds)
 
-Run this once in your project terminal:
+AI coding tools like **Cursor**, **Claude Code**, and **Copilot** write code in seconds.
+
+**The catch?** AI only cares about making the code run *right now*. It constantly forgets basic safety rules:
+- It lets stranger A view stranger B's private files.
+- It writes passwords in ways hackers can easily guess.
+- It messes up math on prices, making money mysteriously vanish.
+- It writes database commands that crash your app when multiple people use it.
+
+**`secure-code` fixes this with one single command.**
+
+---
+
+## 🚀 Quickstart (1-Click Setup)
+
+Run this once inside your project terminal:
 
 ```bash
-# Automatically inject hardened safety rules into .cursorrules, CLAUDE.md, or AGENTS.md:
 npx github:carbonthecoder/secure-code inject
 ```
 
-Want to scan your existing project for hidden AI bugs?
+### What happens?
+It automatically detects whether you use **Cursor**, **Claude**, or **Copilot**, and adds a simple safety rule file to your project. 
+
+From that moment on, your AI assistant is forced to follow basic safety rules and **stops writing broken or hackable code**.
+
+---
+
+## 🩺 Scan your existing project right now
+
+Already built an app with AI? Want to see if it sneaked any bugs into your code?
+
+Run this in your terminal:
 
 ```bash
-# Scan your codebase for data leaks, cracked keys, and raw SQL queries:
 npx github:carbonthecoder/secure-code audit
 ```
 
----
-
-## ?? The Problem: AI Writes Fast, But Forgets Safety Rules
-
-When you build apps using Cursor, Claude Code, Copilot, or ChatGPT, the AI optimizes for **making the code run right now**, not making it secure or fast for production.
-
-Behind your back, AI routinely introduces the same 4 critical mistakes:
-
-1. **User Data Leaks (IDOR)**: The AI writes `WHERE id = :id` without checking if the logged-in user owns the record. Any user can type a different ID in their browser and view or delete someone else�s private data.
-2. **Easy-to-Crack Secret Keys**: It checks passwords and webhook tokens with simple `if (token === secret)`. This allows hackers to deduce your secret character-by-character by measuring server response times in milliseconds (timing side-channel attacks).
-3. **Broken Money Math**: It calculates prices and taxes using floating-point decimals (`price * 0.0825`). Computers cannot represent decimals precisely (`0.1 + 0.2 === 0.30000000000000004`), quietly corrupting user account balances over time.
-4. **Frozen Servers**: It places external network calls (like Stripe or Twilio) inside open database transactions. When multiple users visit your app, this holds database locks and freezes your entire server.
+It scans your files in 2 seconds and points out any hidden traps.
 
 ---
 
-## ??? The Fix: What AI Writes Before vs After
+## 🔍 The 4 Scary Mistakes AI Always Makes (And How We Fix Them)
 
-### 1. Fetching a Private Document
+### 1. 🚪 The "Unlocked Hotel Room" (Private Data Leaks)
+- **The Problem:** Imagine receiving key #101 at a hotel, but your key also opens room #102! When an AI writes code to fetch a file, it searches only by the ID number in the link. It forgets to check if the person asking actually owns it.
+- **The Danger:** Anyone can change `/invoice/101` to `/invoice/102` in their browser and read someone else's private invoice!
+- **What AI writes alone:**
+  ```typescript
+  // ❌ Unsafe: Hands the file to ANYONE who asks for this ID number
+  const doc = await db.document.find({ where: { id: req.params.id } });
+  ```
+- **What it writes with secure-code:**
+  ```typescript
+  // ✅ Safe: Strictly verifies the logged-in user actually owns this file!
+  const doc = await db.document.find({
+    where: { 
+      id: req.params.id, 
+      ownerId: req.session.userId 
+    }
+  });
+  ```
 
-```typescript
-// ? Vanilla AI (Anyone can change the ID in the URL to view any user's file):
-const doc = await db.document.findUnique({
-  where: { id: req.params.id }
-});
+---
 
-// ??? With secure-code (Strictly verifies the logged-in user owns it):
-const doc = await db.document.findFirst({
-  where: {
-    id: req.params.id,
-    userId: req.session.user.id // Only returns if the logged-in user owns it!
+### 2. 💰 The "Ghost Pennies" (Broken Money Math)
+- **The Problem:** Computers are surprisingly bad at decimal math. To a computer, `0.1 + 0.2` actually equals `0.30000000000000004`.
+- **The Danger:** If you calculate shopping carts with decimals (`price * 0.0825`), fractions of cents get rounded off and your bank balance will quietly not match your customer receipts.
+- **What AI writes alone:**
+  ```typescript
+  // ❌ Unsafe: Decimal math quietly corrupts account balances over time
+  let total = price * 1.0825;
+  ```
+- **What it writes with secure-code:**
+  ```typescript
+  // ✅ Safe: Always counts in whole pennies (cents), never decimals!
+  const totalInPennies = (subtotalPennies * 10825n + 5000n) / 10000n;
+  ```
+
+---
+
+### 3. 💣 The "Search Box Prank" (Database Wipes)
+- **The Problem:** A user types text into a search bar. The AI pastes whatever they typed directly into the database command.
+- **The Danger:** A prankster types evil commands like `'; DROP TABLE users; --` into the search box, and the database executes it, wiping out your entire customer list!
+- **What AI writes alone:**
+  ```typescript
+  // ❌ Unsafe: Glues user input directly into the database command
+  db.query(`SELECT * FROM users WHERE id = '${userInput}'`);
+  ```
+- **What it writes with secure-code:**
+  ```typescript
+  // ✅ Safe: Tells the database: 'This is plain text, NEVER run it as code!'
+  db.query('SELECT * FROM users WHERE id = $1', [userInput]);
+  ```
+
+---
+
+### 4. ⏱️ The "Stopwatch Password Guess" (Easily Cracked Keys)
+- **The Problem:** When you check a secret password with normal `===`, the computer checks letter-by-letter and stops the instant it hits a wrong letter.
+- **The Danger:** A hacker with a stopwatch measures the server's response time in milliseconds. If the server took 1 microsecond longer to answer, the hacker knows the first letter was right! They guess your entire password letter-by-letter.
+- **What AI writes alone:**
+  ```typescript
+  // ❌ Unsafe: Quits on the first wrong character (leaks timing clues)
+  if (userToken === secretPassword) { ... }
+  ```
+- **What it writes with secure-code:**
+  ```typescript
+  // ✅ Safe: Takes the exact same time no matter what, revealing zero clues!
+  if (!crypto.timingSafeEqual(Buffer.from(userToken), Buffer.from(secretPassword))) {
+    return res.status(401).send('Wrong password');
   }
-});
-```
-
-### 2. Checking a Webhook Token or Secret
-
-```typescript
-// ? Vanilla AI (Exits on first wrong byte � leaks secrets via microsecond timing):
-if (userToken === process.env.WEBHOOK_SECRET) { ... }
-
-// ??? With secure-code (Constant-time check prevents timing attacks):
-if (!crypto.timingSafeEqual(Buffer.from(userToken), Buffer.from(expectedSecret))) {
-  return res.status(401).send("Unauthorized");
-}
-```
-
-### 3. Calculating Financial Totals
-
-```typescript
-// ? Vanilla AI (Float rounding drift quietly corrupts financial ledgers):
-let total = price * 1.0825;
-
-// ??? With secure-code (Integer cents with Banker's rounding):
-const totalCents = (subtotalCents * 10825n + 5000n) / 10000n;
-```
+  ```
 
 ---
 
-## ?? Supported AI Assistants & Environments
+## 🎮 Try it in your browser (No installation needed)
 
-`secure-code` works with any AI tool by appending strict, non-destructive safety invariants to your existing rules file:
+Want to see this in action right now?  
+Paste any code snippet into our online playground to watch it spot bugs and fix them live:
 
-- **Cursor IDE** ? `.cursorrules`
-- **Anthropic Claude Code** ? `CLAUDE.md`
-- **Google Antigravity / Gemini CLI** ? `GEMINI.md`
-- **GitHub Copilot** ? `copilot-instructions.md`
-- **Any Autonomous Agent** ? `AGENTS.md`
-
-### Polyglot Support (10+ Languages)
-Works out of the box for **TypeScript/JavaScript, Python, Go, Rust, C#/.NET, Java/Kotlin, PHP, Ruby, C++, and Mobile (Swift/Flutter)**.
+👉 **[https://carbonthecoder.github.io/secure-code/](https://carbonthecoder.github.io/secure-code/)**
 
 ---
 
-## ?? Interactive Browser Playground
+## 🤖 Supported Tools & Languages
 
-Don't want to run commands in the terminal yet?  
-Test your code and watch the live auditor catch bugs in real-time on our web playground:
+Works automatically with:
+- **Cursor IDE** (`.cursorrules`)
+- **Claude Code** (`CLAUDE.md`)
+- **GitHub Copilot** (`copilot-instructions.md`)
+- **Gemini / Antigravity / ChatGPT** (`AGENTS.md`)
 
-?? **[https://carbonthecoder.github.io/secure-code/](https://carbonthecoder.github.io/secure-code/)**
-
----
-
-## ?? Printable Cheatsheet
-
-Keep our 1-page DevSecOps reference card open on your second monitor during PR reviews:  
-?? **[Open CHEATSHEET.md](CHEATSHEET.md)**
+Supports all major languages: **JavaScript, TypeScript, Python, Go, Rust, C#, Java, PHP, Ruby, and Mobile (Swift/Flutter)**.
 
 ---
 
-## ?? Contributing
+## 📜 1-Page Cheatsheet
 
-Have a new AI bug pattern, framework recipe, or language stack to add?  
-Pull requests are welcome! Check out [CONTRIBUTING.md](CONTRIBUTING.md).
+Keep our printable safety checklist open while reviewing code:  
+👉 **[Open CHEATSHEET.md](CHEATSHEET.md)**
 
-## ?? License
+---
 
-MIT License � free for personal, commercial, and enterprise software.
+## ⚖️ License
+
+MIT License — 100% Free and Open Source for personal, commercial, and startup projects.
